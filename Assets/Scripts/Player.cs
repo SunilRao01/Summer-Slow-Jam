@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 	public GameObject playerProjectilePrefab;
 	public float playerShootRate;
 	public float bulletSpeed;
-	//private bool shooting;
+	private bool isShooting = false;
 
 	void Awake()
 	{
@@ -25,6 +25,11 @@ public class Player : MonoBehaviour
 	void Start () 
 	{
 	
+	}
+
+	void Update()
+	{
+		shooting();
 	}
 	
 	void FixedUpdate () 
@@ -45,15 +50,52 @@ public class Player : MonoBehaviour
 
 	void shooting()
 	{
-		if (Input.GetButtonDown("HorizontalShooting"))
+		if (Input.GetButtonDown("FireLeft"))
 		{
+			isShooting = true;
 			StartCoroutine(shoot(Direction.left));
+		}
+		else if (Input.GetButtonDown("FireRight"))
+		{
+			isShooting = true;
+			StartCoroutine(shoot(Direction.right));
+		}
+		else if (Input.GetButtonDown("FireDown"))
+		{
+			isShooting = true;
+			StartCoroutine(shoot(Direction.down));
+		}
+		else if (Input.GetButtonDown("FireUp"))
+		{
+			isShooting = true;
+			StartCoroutine(shoot(Direction.up));
+		}
+
+		if (Input.GetButtonUp("FireLeft"))
+		{
+			isShooting = false;
+			StopCoroutine(shoot(Direction.left));
+		}
+		if (Input.GetButtonUp("FireRight"))
+		{
+			isShooting = false;
+			StopCoroutine(shoot(Direction.right));
+		}
+		if (Input.GetButtonUp("FireDown"))
+		{
+			isShooting = false;
+			StopCoroutine(shoot(Direction.down));
+		}
+		if (Input.GetButtonUp("FireUp"))
+		{
+			isShooting = false;
+			StopCoroutine(shoot(Direction.up));
 		}
 	}
 
 	IEnumerator shoot(Direction direction)
 	{
-		while (true)
+		while (isShooting)
 		{
 			yield return new WaitForSeconds(playerShootRate);
 
