@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 	public GameObject playerCombinedProjectilePrefab;
 	public float playerCombinedShootRate;
 	public float combinedBulletSpeed;
-	public bool isShooting = false;
+	private bool isShooting = false;
 	private Vector2 rotationalShootDirection;
 
 	void Awake()
@@ -91,6 +91,10 @@ public class Player : MonoBehaviour
 
 	void activateCombinedMode()
 	{
+		isShooting = false;
+		isShootingHorizontal = false;
+		isShootingVertical = false;
+
 		// Stop current shooting
 		StopAllCoroutines();
 
@@ -104,6 +108,7 @@ public class Player : MonoBehaviour
 		{
 			combined = true;
 		}
+
 	}
 
 	void combinedMovement()
