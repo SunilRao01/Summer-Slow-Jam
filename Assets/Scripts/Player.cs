@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+// TEMP Directional Sprite Movement
+
 
 public class Player : MonoBehaviour 
 {
@@ -7,22 +11,39 @@ public class Player : MonoBehaviour
 
 	public float health;
 
+	// TEMP No Animation
+	// Note: Down, Up, Left, Right
+	private SpriteRenderer o_spriteRenderer;
+	public List<Sprite> facingDirectionSprites; 
+
 	// Movement
 	public float playerMovementSpeed;
 	public float playerMaxMovementSpeed;
-	private Rigidbody2D body;
+	private Rigidbody2D o_rigidbody;
 
 	// Shooting
+	// Individual Quad Directional
 	public GameObject playerProjectilePrefab;
 	public float playerShootRate;
 	public float bulletSpeed;
-	private bool isShooting = false;
-	private Direction shootDirection;
+	private bool isShootingHorizontal = false;
+	private bool isShootingVertical = false;
+	private Direction quadShootDirection;
+
+	// Combined Full Rotational Shooting
+	private bool combined;
+	public GameObject playerCombinedProjectilePrefab;
+	public float playerCombinedShootRate;
+	public float combinedBulletSpeed;
+	public bool isShooting = false;
+	private Vector2 rotationalShootDirection;
 
 	void Awake()
 	{
 		// Initialize local variables
-		body = GetComponent<Rigidbody2D>();
+		o_spriteRenderer = GetComponent<SpriteRenderer>();
+		o_rigidbody = GetComponent<Rigidbody2D>();
+
 	}
 
 	void Start () 
@@ -32,12 +53,87 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		shooting();
+		// TEMP For dev
+		devModeCommands();
+
+		if (combined)
+		{
+			rotationShooting();
+		}
+		else
+		{
+			quadShooting();
+		}
 	}
 	
 	void FixedUpdate () 
 	{
-		movement();
+		if (combined)
+		{
+			combinedMovement();
+		}
+		else
+		{
+			movement();
+		}
+	}
+
+	void devModeCommands()
+	{
+		if (Input.GetButtonDown("DEV Mode Switch"))
+		{
+			Debug.Log("Switch mode");
+
+			activateCombinedMode();
+
+		}
+	}
+
+	void activateCombinedMode()
+	{
+		// Stop current shooting
+		StopAllCoroutines();
+
+		// TODO: Change sprite
+
+		if (combined)
+		{
+			combined = false;
+		}
+		else
+		{
+			combined = true;
+		}
+	}
+
+	void combinedMovement()
+	{
+		Vector2 movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+		movementDirection *= playerMovementSpeed;
+		
+		// TEMP Set sprite by direction
+		// Note: Down, Up, Left, Right
+		if (Input.GetAxis("Horizontal") == 1)
+		{
+			o_spriteRenderer.sprite = facingDirectionSprites[3];
+		}
+		else if (Input.GetAxis("Horizontal") == -1)
+		{
+			o_spriteRenderer.sprite = facingDirectionSprites[2];
+		}
+		if (Input.GetAxis("Vertical") == 1)
+		{
+			o_spriteRenderer.sprite = facingDirectionSprites[1];
+		}
+		else if (Input.GetAxis("Vertical") == -1)
+		{
+			o_spriteRenderer.sprite = facingDirectionSprites[0];
+		}
+		
+		if (o_rigidbody.velocity.magnitude < playerMaxMovementSpeed)
+		{
+			o_rigidbody.AddForce(movementDirection);
+		}
 	}
 
 	void movement()
@@ -45,103 +141,100 @@ public class Player : MonoBehaviour
 		Vector2 movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 		movementDirection *= playerMovementSpeed;
 
-		if (body.velocity.magnitude < playerMaxMovementSpeed)
+		// TEMP Set sprite by direction
+		// Note: Down, Up, Left, Right
+		if (Input.GetAxis("Horizontal") == 1)
 		{
-			body.AddForce(movementDirection);
+			o_spriteRenderer.sprite = facingDirectionSprites[3];
+		}
+		else if (Input.GetAxis("Horizontal") == -1)
+		{
+			o_spriteRenderer.sprite = facingDirectionSprites[2];
+		}
+		if (Input.GetAxis("Vertical") == 1)
+		{
+			o_spriteRenderer.sprite = facingDirectionSprites[1];
+		}
+		else if (Input.GetAxis("Vertical") == -1)
+		{
+			o_spriteRenderer.sprite = facingDirectionSprites[0];
+		}
+
+		if (o_rigidbody.velocity.magnitude < playerMaxMovementSpeed)
+		{
+			o_rigidbody.AddForce(movementDirection);
 		}
 	}
 
-	void shooting()
+	void quadShooting()
 	{
-
-		if (Input.GetButtonDown("FireLeft"))
+		if (!isShootingHorizontal)
 		{
-			if (isShooting)
+			if (Input.GetAxis("ShootHorizontal") == -1)
 			{
-				isShooting = false;
-				StopCoroutine(shoot(shootDirection));
-			}
+				isShootingVertical = false;
+				StopAllCoroutines();
 
-			shootDirection = Direction.left;
-			isShooting = true;
-			StartCoroutine(shoot(shootDirection));
+				quadShootDirection = Direction.left;
+				isShootingHorizontal = true;
+				StartCoroutine(quadShoot(quadShootDirection));
+			}
+			else if (Input.GetAxis("ShootHorizontal") == 1)
+			{
+				isShootingVertical = false;
+				StopAllCoroutines();
+
+				quadShootDirection = Direction.right;
+				isShootingHorizontal = true;
+				StartCoroutine(quadShoot(quadShootDirection));
+			}
 		}
-		else if (Input.GetButtonDown("FireRight"))
+		if (!isShootingVertical)
 		{
-			if (isShooting)
+			if (Input.GetAxis("ShootVertical") == -1)
 			{
-				Debug.Log("Stopping shooting in " + shootDirection + " direction");
-				isShooting = false;
-				StopCoroutine(shoot(shootDirection));
-			}
+				isShootingHorizontal = false;
+				StopAllCoroutines();
 
-			shootDirection = Direction.right;
-			isShooting = true;
-			StartCoroutine(shoot(shootDirection));
-		}
-		else if (Input.GetButtonDown("FireDown"))
-		{
-			if (isShooting)
+				quadShootDirection = Direction.down;
+				isShootingVertical = true;
+				StartCoroutine(quadShoot(quadShootDirection));
+			}
+			else if (Input.GetAxis("ShootVertical") == 1)
 			{
-				isShooting = false;
-				StopCoroutine(shoot(shootDirection));
-			}
+				isShootingHorizontal = false;
+				StopAllCoroutines();
 
-			shootDirection = Direction.down;
-			isShooting = true;
-			StartCoroutine(shoot(shootDirection));
-		}
-		else if (Input.GetButtonDown("FireUp"))
-		{
-			if (isShooting)
-			{
-				isShooting = false;
-				StopCoroutine(shoot(shootDirection));
+				quadShootDirection = Direction.up;
+				isShootingVertical = true;
+				StartCoroutine(quadShoot(quadShootDirection));
 			}
-
-			shootDirection = Direction.up;
-			isShooting = true;
-			StartCoroutine(shoot(shootDirection));
 		}
 
-		if (Input.GetButtonUp("FireLeft"))
+		if (isShootingHorizontal)
 		{
-			if (shootDirection == Direction.left)
+			if (Input.GetAxis("ShootHorizontal") != 1 && Input.GetAxis("ShootHorizontal") != -1)
 			{
-				isShooting = false;
+				isShootingHorizontal = false;
+				StopCoroutine(quadShoot(Direction.left));
+				StopCoroutine(quadShoot(Direction.right));
 			}
-			StopCoroutine(shoot(Direction.left));
 		}
-		if (Input.GetButtonUp("FireRight"))
+		if (isShootingVertical)
 		{
-			if (shootDirection == Direction.right)
+			if (Input.GetAxis("ShootVertical") != 1 && Input.GetAxis("ShootVertical") != -1)
 			{
-				isShooting = false;
+				isShootingVertical = false;
+				StopCoroutine(quadShoot(Direction.up));
+				StopCoroutine(quadShoot(Direction.down));
 			}
-			StopCoroutine(shoot(Direction.right));
-		}
-		if (Input.GetButtonUp("FireDown"))
-		{
-			if (shootDirection == Direction.down)
-			{
-				isShooting = false;
-			}
-			StopCoroutine(shoot(Direction.down));
-		}
-		if (Input.GetButtonUp("FireUp"))
-		{
-			if (shootDirection == Direction.up)
-			{
-				isShooting = false;
-			}
-			StopCoroutine(shoot(Direction.up));
 		}
 
 	}
 
-	IEnumerator shoot(Direction direction)
+	IEnumerator quadShoot(Direction direction)
 	{
-		while (isShooting && shootDirection == direction)
+		while (isShootingHorizontal || isShootingVertical)
 		{
 			yield return new WaitForSeconds(playerShootRate);
 
@@ -173,6 +266,46 @@ public class Player : MonoBehaviour
 			}
 			projectileDirection *= bulletSpeed;
 
+			tempProjectile.GetComponent<Rigidbody2D>().AddForce(projectileDirection);
+		}
+	}
+
+	void rotationShooting()
+	{
+		//Debug.Log("Axis: " + Input.GetAxis("ShootHorizontal") + ", " + Input.GetAxis("ShootVertical"));
+		if (Input.GetAxis("ShootHorizontal") != 0 || Input.GetAxis("ShootVertical") != 0)
+		{
+			Vector2 lookPosition = transform.position;
+			lookPosition.x += (Input.GetAxis("ShootHorizontal") * 5);
+			lookPosition.y += (Input.GetAxis("ShootVertical") * 5);
+			
+			rotationalShootDirection = (lookPosition - (Vector2)transform.position);
+			
+			if (!isShooting)
+			{
+				isShooting = true;
+				StartCoroutine(rotShoot());
+			}
+		}
+		else
+		{
+			rotationalShootDirection = Vector2.up;
+			isShooting = false;
+			StopAllCoroutines();
+		}
+	}
+
+	IEnumerator rotShoot()
+	{
+		while (isShooting)
+		{
+			yield return new WaitForSeconds(playerCombinedShootRate);
+
+			GameObject tempProjectile = (GameObject) Instantiate(playerCombinedProjectilePrefab, transform.position, Quaternion.identity);
+			
+			Vector2 projectileDirection = rotationalShootDirection;
+			projectileDirection *= combinedBulletSpeed;
+			
 			tempProjectile.GetComponent<Rigidbody2D>().AddForce(projectileDirection);
 		}
 	}
