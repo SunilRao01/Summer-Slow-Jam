@@ -5,10 +5,12 @@ public class Player : MonoBehaviour
 {
 	enum Direction {left, up, right, down};
 
+	public float health;
+
 	// Movement
 	public float playerMovementSpeed;
 	public float playerMaxMovementSpeed;
-	private Rigidbody2D rigidbody;
+	private Rigidbody2D body;
 
 	// Shooting
 	public GameObject playerProjectilePrefab;
@@ -20,7 +22,7 @@ public class Player : MonoBehaviour
 	void Awake()
 	{
 		// Initialize local variables
-		rigidbody = GetComponent<Rigidbody2D>();
+		body = GetComponent<Rigidbody2D>();
 	}
 
 	void Start () 
@@ -43,9 +45,9 @@ public class Player : MonoBehaviour
 		Vector2 movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 		movementDirection *= playerMovementSpeed;
 
-		if (rigidbody.velocity.magnitude < playerMaxMovementSpeed)
+		if (body.velocity.magnitude < playerMaxMovementSpeed)
 		{
-			rigidbody.AddForce(movementDirection);
+			body.AddForce(movementDirection);
 		}
 	}
 
