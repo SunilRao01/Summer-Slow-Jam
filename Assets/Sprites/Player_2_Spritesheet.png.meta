@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 4ebff198069e2e747bab3e1de60b19b3
-timeCreated: 1466278839
+guid: 4d955613c2c84c148b8c6e481c521445
+timeCreated: 1466477180
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Player_1_Spritesheet_0
-    21300002: Player_1_Spritesheet_1
-    21300004: Player_1_Spritesheet_2
-    21300006: Player_1_Spritesheet_3
+    21300000: Player_2_Spritesheet_0
+    21300002: Player_2_Spritesheet_1
+    21300004: Player_2_Spritesheet_2
+    21300006: Player_2_Spritesheet_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -53,43 +53,43 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Player_1_Spritesheet_0
+    - name: Player_2_Spritesheet_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 5
         y: 0
-        width: 62
-        height: 57
+        width: 54
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Player_1_Spritesheet_1
+    - name: Player_2_Spritesheet_1
       rect:
         serializedVersion: 2
-        x: 65
+        x: 69
         y: 0
-        width: 62
-        height: 57
+        width: 54
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Player_1_Spritesheet_2
+    - name: Player_2_Spritesheet_2
       rect:
         serializedVersion: 2
-        x: 138
+        x: 137
         y: 0
-        width: 44
-        height: 57
+        width: 46
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Player_1_Spritesheet_3
+    - name: Player_2_Spritesheet_3
       rect:
         serializedVersion: 2
-        x: 202
+        x: 201
         y: 0
-        width: 44
-        height: 57
+        width: 46
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

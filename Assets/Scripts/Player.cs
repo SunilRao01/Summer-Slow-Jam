@@ -37,12 +37,19 @@ public class Player : MonoBehaviour
 	public float combinedBulletSpeed;
 	private bool isShooting = false;
 	private Vector2 rotationalShootDirection;
+	public List<Sprite> combinedFacingDirectionSprites;
+	
+	private List<Sprite> currentDirectionalSprites;
 
 	void Awake()
 	{
 		// Initialize local variables
 		o_spriteRenderer = GetComponent<SpriteRenderer>();
 		o_rigidbody = GetComponent<Rigidbody2D>();
+
+		// Default direction currently facing up
+		o_spriteRenderer.sprite = facingDirectionSprites[1];
+		currentDirectionalSprites = facingDirectionSprites;
 
 	}
 
@@ -84,12 +91,12 @@ public class Player : MonoBehaviour
 		{
 			Debug.Log("Switch mode");
 
-			activateCombinedMode();
+			toggleCombinedMode();
 
 		}
 	}
 
-	void activateCombinedMode()
+	void toggleCombinedMode()
 	{
 		isShooting = false;
 		isShootingHorizontal = false;
@@ -98,7 +105,7 @@ public class Player : MonoBehaviour
 		// Stop current shooting
 		StopAllCoroutines();
 
-		// TODO: Change sprite
+
 
 		if (combined)
 		{
@@ -109,6 +116,15 @@ public class Player : MonoBehaviour
 			combined = true;
 		}
 
+		// Change sprite
+		if (!combined)
+		{
+			currentDirectionalSprites = facingDirectionSprites;
+		}
+		else
+		{
+			currentDirectionalSprites = combinedFacingDirectionSprites;
+		}
 	}
 
 	void combinedMovement()
@@ -120,19 +136,19 @@ public class Player : MonoBehaviour
 		// Note: Down, Up, Left, Right
 		if (Input.GetAxis("Horizontal") == 1)
 		{
-			o_spriteRenderer.sprite = facingDirectionSprites[3];
+			o_spriteRenderer.sprite = currentDirectionalSprites[3];
 		}
 		else if (Input.GetAxis("Horizontal") == -1)
 		{
-			o_spriteRenderer.sprite = facingDirectionSprites[2];
+			o_spriteRenderer.sprite = currentDirectionalSprites[2];
 		}
 		if (Input.GetAxis("Vertical") == 1)
 		{
-			o_spriteRenderer.sprite = facingDirectionSprites[1];
+			o_spriteRenderer.sprite = currentDirectionalSprites[1];
 		}
 		else if (Input.GetAxis("Vertical") == -1)
 		{
-			o_spriteRenderer.sprite = facingDirectionSprites[0];
+			o_spriteRenderer.sprite = currentDirectionalSprites[0];
 		}
 		
 		if (o_rigidbody.velocity.magnitude < playerMaxMovementSpeed)
@@ -150,19 +166,19 @@ public class Player : MonoBehaviour
 		// Note: Down, Up, Left, Right
 		if (Input.GetAxis("Horizontal") == 1)
 		{
-			o_spriteRenderer.sprite = facingDirectionSprites[3];
+			o_spriteRenderer.sprite = currentDirectionalSprites[3];
 		}
 		else if (Input.GetAxis("Horizontal") == -1)
 		{
-			o_spriteRenderer.sprite = facingDirectionSprites[2];
+			o_spriteRenderer.sprite = currentDirectionalSprites[2];
 		}
 		if (Input.GetAxis("Vertical") == 1)
 		{
-			o_spriteRenderer.sprite = facingDirectionSprites[1];
+			o_spriteRenderer.sprite = currentDirectionalSprites[1];
 		}
 		else if (Input.GetAxis("Vertical") == -1)
 		{
-			o_spriteRenderer.sprite = facingDirectionSprites[0];
+			o_spriteRenderer.sprite = currentDirectionalSprites[0];
 		}
 
 		if (o_rigidbody.velocity.magnitude < playerMaxMovementSpeed)
@@ -297,6 +313,16 @@ public class Player : MonoBehaviour
 			rotationalShootDirection = Vector2.up;
 			isShooting = false;
 			StopAllCoroutines();
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.gameObject.CompareTag("Player"))
+		{
+			// Change shooting mode
+			toggleCombinedMode();
+
 		}
 	}
 
