@@ -11,7 +11,6 @@ public class Boss_1 : MonoBehaviour
 	public GameObject boxPrefab;
 
 	// Physics
-	private Rigidbody2D body;
 
 	// Phase Variables
 	private GameObject player1;
@@ -24,10 +23,13 @@ public class Boss_1 : MonoBehaviour
 	// Phase 1
 	private Transform currentTarget;
 	public float phase1MovementSpeed;
+	private int subphase = 1;
 
 	// Phase 2
 	public float phase2MovementSpeed;
 
+	// Phase 3
+	private bool subphasing;
 
 	public Transform playerTransform;
 
@@ -73,7 +75,6 @@ public class Boss_1 : MonoBehaviour
 			default:
 				break;
 		}
-
 	}
 
 	private void findClosestPlayer()
@@ -124,6 +125,7 @@ public class Boss_1 : MonoBehaviour
 	{
 		if (!phasing)
 		{
+			subphase = 1;
 			StartCoroutine(phase3Routines());
 			transform.GetChild(1).GetComponent<BlendColors>().blendColors[0] = Color.blue;
 
@@ -141,6 +143,7 @@ public class Boss_1 : MonoBehaviour
 			o_rigidbody.AddRelativeForce((currentTarget.position - transform.position) * phase1MovementSpeed);
 		}
 	}
+
 	IEnumerator phase1Routines()
 	{
 		while (currentPhase == 1)
@@ -151,6 +154,7 @@ public class Boss_1 : MonoBehaviour
 			o_rigidbody.AddRelativeForce((currentTarget.position - transform.position) * phase1MovementSpeed);
 		}
 	}
+
 	IEnumerator phase2Routines()
 	{
 		while (currentPhase == 2)
@@ -164,14 +168,40 @@ public class Boss_1 : MonoBehaviour
 			o_rigidbody.AddRelativeForce((enemyCenter - (Vector2)transform.position) * phase2MovementSpeed);
 		}
 	}
+
+	// X: -6 to 6
+	// Y: -3 to 3
 	IEnumerator phase3Routines()
 	{
 		while (currentPhase == 3)
 		{
 			yield return new WaitForSeconds(0.1f);
 
-			// Movement
-			o_rigidbody.AddRelativeForce((currentTarget.position - transform.position) * phase1MovementSpeed);
+			if (!subphasing)
+			{
+				if (subphase == 1)
+				{
+					// Movement
+					currentTarget = transform;
+					currentTarget.position = new Vector2(Random.Range(-6.0f, 6.0f), Random.Range(-3.0f, 3.0f));
+
+					subphasing = true;
+				}
+			}
+			else
+			{
+				// TODO: Check if destination is reached (or reached enough)
+				Vector2 distanceVector = transform.position - currentTarget.position;
+
+				if (distanceVector.magnitude > 0.1f)
+				{
+					o_rigidbody.AddRelativeForce((currentTarget.position - transform.position) * phase1MovementSpeed);
+				}
+				else
+				{
+					subphasing = false;
+				}
+			}
 		}
 	}
 
@@ -179,7 +209,7 @@ public class Boss_1 : MonoBehaviour
 	{
 		// Play pre-phase animation
 		// TEMP: Simple rotational animation
-		body.AddTorque(200.0f);
+		o_rigidbody.AddTorque(200.0f);
 
 		// TODO: Replace time with how long animation will take to animate
 		yield return new WaitForSeconds(3.0f);

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 // TEMP Directional Sprite Movement
 
 
-public class Player : MonoBehaviour 
+public class Player : MonoBehaviour
 {
 	enum Direction {left, up, right, down};
 
@@ -40,6 +40,9 @@ public class Player : MonoBehaviour
 	public List<Sprite> combinedFacingDirectionSprites;
 	
 	private List<Sprite> currentDirectionalSprites;
+
+	// Animations and effects
+	private float flashTime;
 
 	void Awake()
 	{
@@ -373,4 +376,16 @@ public class Player : MonoBehaviour
 			tempProjectile.GetComponent<Rigidbody2D>().AddForce(projectileDirection);
 		}
 	}
+
+	/*
+	void OnTriggerEnter2D(Collision2D coll)
+	{
+		takeDamage (1.00f);
+	}
+
+	void takeDamage (float amount)
+	{
+
+	}
+	*/
 }
