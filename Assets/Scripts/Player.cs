@@ -161,6 +161,7 @@ public class Player : MonoBehaviour
 	{
 		Vector2 movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
+		// Temp keyboard controls
 		if (Input.GetKey(KeyCode.A))
 		{
 			movementDirection.x -= 1;
@@ -286,6 +287,8 @@ public class Player : MonoBehaviour
 
 			GameObject tempProjectile = (GameObject) Instantiate(playerProjectilePrefab, transform.position, Quaternion.identity);
 
+			// TODO: rotate projectile sprite relative to shoot direction
+
 			Vector2 projectileDirection = Vector2.zero;
 			switch (direction)
 			{
@@ -350,7 +353,8 @@ public class Player : MonoBehaviour
 
 			if (gameObject.name == "Player_2")
 			{
-				Destroy (gameObject);
+				Destroy(other.gameObject.GetComponent<Player>());
+				other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 			}
 		}
 	}

@@ -25,6 +25,10 @@ public class Boss_1 : MonoBehaviour
 	private Transform currentTarget;
 	public float phase1MovementSpeed;
 
+	// Phase 2
+	public float phase2MovementSpeed;
+
+
 	public Transform playerTransform;
 
 	void Awake () 
@@ -50,9 +54,21 @@ public class Boss_1 : MonoBehaviour
 	{
 		switch (currentPhase)
 		{
+			// Phase 0
+			case 0:
+				phase0();
+				break;
 			// Phase 1
 			case 1:
-				phase1 ();
+				phase1();
+				break;
+			// Phase 2
+			case 2:
+				phase2();
+				break;
+			// Phase 3
+			case 3:
+				phase3();
 				break;
 			default:
 				break;
@@ -75,22 +91,82 @@ public class Boss_1 : MonoBehaviour
 		}
 	}
 
+	void phase0()
+	{
+
+	}
+
 	void phase1()
 	{
-		// TODO: Find closes player
 		findClosestPlayer();
 
 		if (!phasing)
 		{
 			StartCoroutine(phase1Routines());
+			transform.GetChild(1).GetComponent<BlendColors>().blendColors[0] = Color.red;
+
 			phasing = true;
 		}
-
 	}
 
+	void phase2()
+	{
+		if (!phasing)
+		{
+			StartCoroutine(phase2Routines());
+			transform.GetChild(1).GetComponent<BlendColors>().blendColors[0] = Color.green;
+
+			phasing = true;
+		}
+	}
+
+	void phase3()
+	{
+		if (!phasing)
+		{
+			StartCoroutine(phase3Routines());
+			transform.GetChild(1).GetComponent<BlendColors>().blendColors[0] = Color.blue;
+
+			phasing = true;
+		}
+	}
+
+	IEnumerator phase0Routines()
+	{
+		while (currentPhase == 1)
+		{
+			yield return new WaitForSeconds(0.1f);
+
+			// Movement
+			o_rigidbody.AddRelativeForce((currentTarget.position - transform.position) * phase1MovementSpeed);
+		}
+	}
 	IEnumerator phase1Routines()
 	{
 		while (currentPhase == 1)
+		{
+			yield return new WaitForSeconds(0.1f);
+			
+			// Movement
+			o_rigidbody.AddRelativeForce((currentTarget.position - transform.position) * phase1MovementSpeed);
+		}
+	}
+	IEnumerator phase2Routines()
+	{
+		while (currentPhase == 2)
+		{
+			yield return new WaitForSeconds(0.1f);
+
+			// TODO: Move towards center of screen
+			Vector2 enemyCenter = new Vector2(0.0f, 1.0f);
+
+			// Movement
+			o_rigidbody.AddRelativeForce((enemyCenter - (Vector2)transform.position) * phase2MovementSpeed);
+		}
+	}
+	IEnumerator phase3Routines()
+	{
+		while (currentPhase == 3)
 		{
 			yield return new WaitForSeconds(0.1f);
 
