@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class Boss_1 : MonoBehaviour 
 {
 	// Stats
-	private int health = 100;
+	private int maxHealth;
+	public int health = 1000;
 	public Text healthLabel;
 
 	// Phasing
@@ -52,18 +53,25 @@ public class Boss_1 : MonoBehaviour
 
 		// Initialize local variables
 		o_rigidbody = GetComponent<Rigidbody2D>();
+
+		maxHealth = health;
+		healthLabel.text = health.ToString();
 	}
 
 	void Update () 
 	{
-		if (phased && (health == 66 || health == 33))
+		if (phased)
 		{
-			StopAllCoroutines();
-			currentPhase++;
-			phased = false;
-			phasing = false;
+			if ((health == ((maxHealth/3) * 2) || health == (maxHealth/3)))
+			{
+				phased = false;
+				phasing = false;
+				StopAllCoroutines();
+
+				currentPhase++;
+			}
 		}
-		else if (health != 66 && health != 33)
+		else if (health != ((maxHealth/3) * 2) && health != (maxHealth/3))
 		{
 			phased = true;
 		}

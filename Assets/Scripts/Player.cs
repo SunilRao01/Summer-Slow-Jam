@@ -226,6 +226,7 @@ public class Player : MonoBehaviour
 				StopAllCoroutines();
 
 				quadShootDirection = Direction.left;
+
 				isShootingHorizontal = true;
 				StartCoroutine(quadShoot(quadShootDirection));
 			}
@@ -299,6 +300,7 @@ public class Player : MonoBehaviour
 			{
 				case Direction.left:
 				{
+					tempProjectile.transform.Rotate(Vector3.forward, 90);
 					projectileDirection.x = -1;
 					break;
 				}
@@ -309,11 +311,13 @@ public class Player : MonoBehaviour
 				}
 				case Direction.right:
 				{
+					tempProjectile.transform.Rotate(Vector3.forward,270);	
 					projectileDirection.x = 1;
 					break;
 				}
 				case Direction.down:
 				{
+					tempProjectile.transform.Rotate(Vector3.forward, 180);	
 					projectileDirection.y = -1;
 					break;
 				}
@@ -323,7 +327,7 @@ public class Player : MonoBehaviour
 			tempProjectile.GetComponent<Rigidbody2D>().AddForce(projectileDirection);
 		}
 	}
-
+		
 	void rotationShooting()
 	{
 		//Debug.Log("Axis: " + Input.GetAxis("ShootHorizontal") + ", " + Input.GetAxis("ShootVertical"));
@@ -334,7 +338,8 @@ public class Player : MonoBehaviour
 			lookPosition.y += (Input.GetAxis("ShootVertical") * 5);
 			
 			rotationalShootDirection = (lookPosition - (Vector2)transform.position);
-			
+			rotationalShootDirection.Normalize();
+
 			if (!isShooting)
 			{
 				isShooting = true;
@@ -376,6 +381,19 @@ public class Player : MonoBehaviour
 			projectileDirection *= combinedBulletSpeed;
 			
 			tempProjectile.GetComponent<Rigidbody2D>().AddForce(projectileDirection);
+
+			if (projectileDirection.x > 0)
+			{
+				tempProjectile.transform.Rotate(Vector3.forward, 270);
+			}
+			else if (projectileDirection.x < 0)
+			{
+				tempProjectile.transform.Rotate(Vector3.forward, 90);
+			}
+			else if (projectileDirection.y < 0)
+			{
+				tempProjectile.transform.Rotate(Vector3.forward, 180);
+			}
 		}
 	}
 
