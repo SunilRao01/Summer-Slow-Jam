@@ -238,6 +238,13 @@ public class Boss_1 : MonoBehaviour
 		{
 			yield return new WaitForSeconds(0.1f);
 
+			GameObject tempProjectile = (GameObject) Instantiate(phase1ProjectilePrefab, transform.position, Quaternion.identity);
+			
+			Vector2 shootDirection = player1.transform.position - transform.position;
+			shootDirection.Normalize();
+			
+			tempProjectile.GetComponent<Rigidbody2D>().AddRelativeForce(shootDirection * phase1ShootSpeed);
+
 			if (!subphasing)
 			{
 				if (subphase == 1)
