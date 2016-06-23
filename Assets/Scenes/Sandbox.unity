@@ -87,6 +87,52 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &269452966
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 496212, guid: 4d4c323b22b74f84a8f248a55be8af53, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496212, guid: 4d4c323b22b74f84a8f248a55be8af53, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496212, guid: 4d4c323b22b74f84a8f248a55be8af53, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496212, guid: 4d4c323b22b74f84a8f248a55be8af53, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496212, guid: 4d4c323b22b74f84a8f248a55be8af53, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496212, guid: 4d4c323b22b74f84a8f248a55be8af53, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496212, guid: 4d4c323b22b74f84a8f248a55be8af53, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 496212, guid: 4d4c323b22b74f84a8f248a55be8af53, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 110938, guid: 4d4c323b22b74f84a8f248a55be8af53, type: 2}
+      propertyPath: m_Name
+      value: Boss_1_Projectile
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4d4c323b22b74f84a8f248a55be8af53, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &638795577
 Prefab:
   m_ObjectHideFlags: 0
@@ -902,42 +948,11 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: .870000005, y: -.75}
-      - {x: .99000001, y: -.600000024}
-      - {x: 1.09000003, y: -.389999986}
-      - {x: 1.11000001, y: -.280000001}
-      - {x: 1.16999996, y: -.129999995}
-      - {x: 1.16999996, y: 0}
-      - {x: 1.08000004, y: .0900000036}
-      - {x: 1.14999998, y: .209999993}
-      - {x: 1.13, y: .319999993}
-      - {x: .980000019, y: .600000024}
-      - {x: .870000005, y: .75}
-      - {x: .75, y: .870000005}
-      - {x: .600000024, y: .980000019}
-      - {x: .360000014, y: 1.10000002}
-      - {x: .140000001, y: 1.13999999}
-      - {x: -.159999996, y: 1.13999999}
-      - {x: -.360000014, y: 1.10000002}
-      - {x: -.660000026, y: .949999988}
-      - {x: -.879999995, y: .75}
-      - {x: -.99000001, y: .600000024}
-      - {x: -1.13999999, y: .319999993}
-      - {x: -1.14999998, y: .209999993}
-      - {x: -1.08000004, y: .159999996}
-      - {x: -1.16999996, y: 0}
-      - {x: -1.16999996, y: -.129999995}
-      - {x: -1.09000003, y: -.389999986}
-      - {x: -.949999988, y: -.660000026}
-      - {x: -.870000005, y: -.75}
-      - {x: -.660000026, y: -.949999988}
-      - {x: -.439999998, y: -1.07000005}
-      - {x: -.239999995, y: -1.12}
-      - {x: -.150000006, y: -1.13999999}
-      - {x: .189999998, y: -1.13999999}
-      - {x: .280000001, y: -1.11000001}
-      - {x: .439999998, y: -1.07000005}
-      - {x: .660000026, y: -.949999988}
+    - - {x: -.0500000007, y: .0599999987}
+      - {x: -.0599999987, y: .0500000007}
+      - {x: -.0599999987, y: -.0599999987}
+      - {x: .0599999987, y: -.0599999987}
+      - {x: .0599999987, y: .0599999987}
 --- !u!50 &1887547749
 Rigidbody2D:
   serializedVersion: 2
@@ -965,10 +980,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4380f5421366cf047bb5caecdfb331ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPhase: 3
+  currentPhase: 1
   boxPrefab: {fileID: 0}
   phase1MovementSpeed: 1
+  phase1ShootSpeed: 200
+  phase1ProjectilePrefab: {fileID: 110938, guid: 4d4c323b22b74f84a8f248a55be8af53,
+    type: 2}
   phase2MovementSpeed: 1
+  phase3MovementSpeed: 5
   playerTransform: {fileID: 0}
 --- !u!1 &1958002153
 GameObject:

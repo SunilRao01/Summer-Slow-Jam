@@ -23,6 +23,8 @@ public class Boss_1 : MonoBehaviour
 	// Phase 1
 	private Transform currentTarget;
 	public float phase1MovementSpeed;
+	public float phase1ShootSpeed;
+	public GameObject phase1ProjectilePrefab;
 	private int subphase = 1;
 
 	// Phase 2
@@ -31,6 +33,7 @@ public class Boss_1 : MonoBehaviour
 	// Phase 3
 	private Vector2 currentTargetPosition;
 	private bool subphasing;
+	public float phase3MovementSpeed;
 
 	public Transform playerTransform;
 
@@ -104,7 +107,8 @@ public class Boss_1 : MonoBehaviour
 
 		if (!phasing)
 		{
-			StartCoroutine(phase1Routines());
+			StartCoroutine(phase1MovementRoutines());
+			StartCoroutine(phase1ShootingRoutines());
 			transform.GetChild(1).GetComponent<BlendColors>().blendColors[0] = Color.red;
 
 			phasing = true;
@@ -145,7 +149,7 @@ public class Boss_1 : MonoBehaviour
 		}
 	}
 
-	IEnumerator phase1Routines()
+	IEnumerator phase1MovementRoutines()
 	{
 		while (currentPhase == 1)
 		{
@@ -153,6 +157,21 @@ public class Boss_1 : MonoBehaviour
 			
 			// Movement
 			o_rigidbody.AddRelativeForce((currentTarget.position - transform.position) * phase1MovementSpeed);
+		}
+	}
+
+	IEnumerator phase1ShootingRoutines()
+	{
+		while (currentPhase == 1)
+		{
+			yield return new WaitForSeconds(0.5f);
+
+			GameObject tempProjectile = (GameObject) Instantiate(phase1ProjectilePrefab, transform.position, Quaternion.identity);
+
+			Vector2 shootDirection = player1.transform.position - transform.position;
+			shootDirection.Normalize();
+
+			tempProjectile.GetComponent<Rigidbody2D>().AddRelativeForce(shootDirection * phase1ShootSpeed);
 		}
 	}
 
@@ -191,18 +210,18 @@ public class Boss_1 : MonoBehaviour
 			else
 			{
 				// TODO: Check if destination is reached (or reached enough)
-				Vector2 distanceVector = transform.position - currentTarget.position;
+				Vector2 distanceVector = (Vector2)transform.position - currentTargetPosition;
 
-				Debug.Log(distanceVector.ToString());
+				Debug.Log(distanceVector.magnitude.ToString());
 
-				/*if (distanceVector.magnitude > 0.1f)
+				if (distanceVector.magnitude > 0.5f)
 				{
-					o_rigidbody.AddRelativeForce((currentTargetPosition - transform.position) * phase1MovementSpeed);
+					o_rigidbody.AddRelativeForce((currentTargetPosition - (Vector2)transform.position) * phase3MovementSpeed);
 				}
 				else
 				{
 					subphasing = false;
-				}*/
+				}
 			}
 		}
 	}
