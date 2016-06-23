@@ -160,23 +160,48 @@ public class Player : MonoBehaviour
 	void movement()
 	{
 		Vector2 movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+		if (Input.GetKey(KeyCode.A))
+		{
+			movementDirection.x -= 1;
+		}
+
+		 if (Input.GetKey(KeyCode.S))
+		{
+			movementDirection.y -= 1;
+		}
+
+		 if (Input.GetKey(KeyCode.D))
+		{
+			movementDirection.x += 1;
+		}
+
+
+		if (Input.GetKey(KeyCode.W))
+		{
+			movementDirection.y += 1;
+		}
+
+
 		movementDirection *= playerMovementSpeed;
+
+
 
 		// TEMP Set sprite by direction
 		// Note: Down, Up, Left, Right
-		if (Input.GetAxis("Horizontal") == 1)
+		if (Input.GetAxis("Horizontal") == 1 || Input.GetKey(KeyCode.D))
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[3];
 		}
-		else if (Input.GetAxis("Horizontal") == -1)
+		else if (Input.GetAxis("Horizontal") == -1 || Input.GetKey(KeyCode.A))
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[2];
 		}
-		if (Input.GetAxis("Vertical") == 1)
+		if (Input.GetAxis("Vertical") == 1 || Input.GetKey(KeyCode.W))
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[1];
 		}
-		else if (Input.GetAxis("Vertical") == -1)
+		else if (Input.GetAxis("Vertical") == -1 || Input.GetKey(KeyCode.S))
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[0];
 		}
