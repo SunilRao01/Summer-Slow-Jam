@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
 		o_rigidbody = GetComponent<Rigidbody2D>();
 
 		// Default direction currently facing up
-		o_spriteRenderer.sprite = facingDirectionSprites[1];
+		o_spriteRenderer.sprite = facingDirectionSprites[0];
 		currentDirectionalSprites = facingDirectionSprites;
 
 	}
@@ -323,6 +323,10 @@ public class Player : MonoBehaviour
 			// Change shooting mode
 			toggleCombinedMode();
 
+			if (gameObject.name == "Player_2")
+			{
+				Destroy (gameObject);
+			}
 		}
 	}
 

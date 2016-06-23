@@ -4,6 +4,7 @@ using System.Collections;
 public class Boss_1 : MonoBehaviour 
 {
 	// Phasing
+	private bool phasing;
 	public int currentPhase;
 
 	// Prefabs
@@ -13,14 +14,26 @@ public class Boss_1 : MonoBehaviour
 	private Rigidbody2D body;
 
 	// Phase Variables
+	private GameObject player1;
+	private GameObject player2;
+	private Rigidbody2D o_rigidbody;
+
+	// Phase 0
 	private GameObject tempBox = null;
+
+	// Phase 1
+	private Transform currentTarget;
+	public float phase1MovementSpeed;
 
 	public Transform playerTransform;
 
 	void Awake () 
 	{
+		player1 = GameObject.Find("Player_1").gameObject;
+		player2 = GameObject.Find("Player_2").gameObject;
+
 		// Initialize local variables
-		body = GetComponent<Rigidbody2D>();
+		o_rigidbody = GetComponent<Rigidbody2D>();
 	}
 
 	void Start()
@@ -30,7 +43,60 @@ public class Boss_1 : MonoBehaviour
 
 	void Update () 
 	{
+		movement();
+	}
 
+	void movement()
+	{
+		switch (currentPhase)
+		{
+			// Phase 1
+			case 1:
+				phase1 ();
+				break;
+			default:
+				break;
+		}
+
+	}
+
+	private void findClosestPlayer()
+	{
+		float player1Distance = Mathf.Abs((player1.transform.position - transform.position).magnitude);
+		float player2Distance = Mathf.Abs((player2.transform.position - transform.position).magnitude);
+		
+		if (player1Distance < player2Distance)
+		{
+			currentTarget = player1.transform;
+		}
+		else
+		{
+			currentTarget = player2.transform;
+		}
+	}
+
+	void phase1()
+	{
+		// TODO: Find closes player
+		findClosestPlayer();
+
+		if (!phasing)
+		{
+			StartCoroutine(phase1Routines());
+			phasing = true;
+		}
+
+	}
+
+	IEnumerator phase1Routines()
+	{
+		while (currentPhase == 1)
+		{
+			yield return new WaitForSeconds(0.1f);
+
+			// Movement
+			o_rigidbody.AddRelativeForce((currentTarget.position - transform.position) * phase1MovementSpeed);
+		}
 	}
 
 	IEnumerator startBoxPhase()
@@ -70,7 +136,5 @@ public class Boss_1 : MonoBehaviour
 				newBossPosition.y = -2.5f;
 				break;
 		}
-
-
 	}
 }
