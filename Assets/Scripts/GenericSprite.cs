@@ -12,6 +12,11 @@ public class GenericSprite : MonoBehaviour
 	
 	// Update is called once per frame
 	public void Update () {
-		GetComponent<SpriteRenderer>().sortingOrder = (int)((transform.position.y + SortOffset) * -100.00);
+		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
+		Debug.Log (sr.sprite.bounds.max.y);
+		sr.sortingOrder = 
+			(int)((transform.position.y +
+			       sr.sprite.bounds.min.y +
+			       SortOffset) * -100.00);
 	}
 }
