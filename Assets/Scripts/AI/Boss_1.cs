@@ -29,6 +29,7 @@ public class Boss_1 : MonoBehaviour
 	public float phase2MovementSpeed;
 
 	// Phase 3
+	private Vector2 currentTargetPosition;
 	private bool subphasing;
 
 	public Transform playerTransform;
@@ -182,8 +183,7 @@ public class Boss_1 : MonoBehaviour
 				if (subphase == 1)
 				{
 					// Movement
-					currentTarget = transform;
-					currentTarget.position = new Vector2(Random.Range(-6.0f, 6.0f), Random.Range(-3.0f, 3.0f));
+					currentTargetPosition = new Vector2(Random.Range(-6.0f, 6.0f), Random.Range(-3.0f, 3.0f));
 
 					subphasing = true;
 				}
@@ -193,14 +193,16 @@ public class Boss_1 : MonoBehaviour
 				// TODO: Check if destination is reached (or reached enough)
 				Vector2 distanceVector = transform.position - currentTarget.position;
 
-				if (distanceVector.magnitude > 0.1f)
+				Debug.Log(distanceVector.ToString());
+
+				/*if (distanceVector.magnitude > 0.1f)
 				{
-					o_rigidbody.AddRelativeForce((currentTarget.position - transform.position) * phase1MovementSpeed);
+					o_rigidbody.AddRelativeForce((currentTargetPosition - transform.position) * phase1MovementSpeed);
 				}
 				else
 				{
 					subphasing = false;
-				}
+				}*/
 			}
 		}
 	}
