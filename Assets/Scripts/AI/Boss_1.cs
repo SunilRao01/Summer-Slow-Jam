@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Boss_1 : MonoBehaviour 
 {
+	// Stats
+	private int health = 100;
+	public Text healthLabel;
+
 	// Phasing
 	private bool phasing;
 	public int currentPhase;
+	private bool phased;
 
 	// Prefabs
 	public GameObject boxPrefab;
@@ -29,6 +35,8 @@ public class Boss_1 : MonoBehaviour
 
 	// Phase 2
 	public float phase2MovementSpeed;
+	private bool landed;
+	public GameObject minionPrefab;
 
 	// Phase 3
 	private Vector2 currentTargetPosition;
@@ -46,13 +54,19 @@ public class Boss_1 : MonoBehaviour
 		o_rigidbody = GetComponent<Rigidbody2D>();
 	}
 
-	void Start()
-	{
-
-	}
-
 	void Update () 
 	{
+		if (phased && (health == 66 || health == 33))
+		{
+			StopAllCoroutines();
+			currentPhase++;
+			phased = false;
+		}
+		else if (health != 66 && health != 33)
+		{
+			phased = true;
+		}
+
 		movement();
 	}
 
@@ -181,11 +195,33 @@ public class Boss_1 : MonoBehaviour
 		{
 			yield return new WaitForSeconds(0.1f);
 
-			// TODO: Move towards center of screen
-			Vector2 enemyCenter = new Vector2(0.0f, 1.0f);
+			if (!landed)
+			{
+				// TODO: Move towards center of screen
+				Vector2 enemyCenter = new Vector2(0.0f, 1.0f);
 
-			// Movement
-			o_rigidbody.AddRelativeForce((enemyCenter - (Vector2)transform.position) * phase2MovementSpeed);
+				// Movement
+				o_rigidbody.AddRelativeForce((enemyCenter - (Vector2)transform.position) * phase2MovementSpeed);
+
+				if (((Vector2)transform.position - enemyCenter).magnitude < 0.5f)
+				{
+					landed = true;
+				}
+			}
+			else
+			{
+				// TODO
+			}
+		}
+	}
+
+	IEnumerator phase2SpawnMinions()
+	{
+		while (currentPhase == 2)
+		{
+			yield return new WaitForSeconds(0.1f);
+
+			GameObject tempMinion = (GameObject) Instantiate(minionPrefab, transform.position, Quaternion.identity);
 		}
 	}
 
@@ -262,6 +298,21 @@ public class Boss_1 : MonoBehaviour
 				newBossPosition.x = 5;
 				newBossPosition.y = -2.5f;
 				break;
+		}
+	}
+
+	private void damage()
+	{
+		health--;
+		healthLabel.text = health.ToString();
+	}
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.CompareTag("PlayerProjectile"))
+		{
+			Destroy (other.gameObject);
+			damage();
 		}
 	}
 }
