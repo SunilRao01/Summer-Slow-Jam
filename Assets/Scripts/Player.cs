@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
-	enum Direction {left, up, right, down};
+	enum Direction {none, left, up, right, down};
 
 	public float health;
 
@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
 	public float bulletSpeed;
 	private bool isShootingHorizontal = false;
 	private bool isShootingVertical = false;
+	private bool isQuadShootRunning = false;
 	private Direction quadShootDirection;
 
 	// Combined Full Rotational Shooting
@@ -218,50 +219,63 @@ public class Player : MonoBehaviour
 
 	void quadShooting()
 	{
-		if (!isShootingHorizontal)
-		{
-			if (Input.GetAxis("ShootHorizontal") == -1 || Input.GetKey(KeyCode.LeftArrow))
-			{
-				isShootingVertical = false;
-				StopAllCoroutines();
+		// Get our axis values.
+		float axisH = Input.GetAxis ("ShootHorizontal"),
+		      axisV = Input.GetAxis ("ShootVertical");
 
-				quadShootDirection = Direction.left;
-
-				isShootingHorizontal = true;
-				StartCoroutine(quadShoot(quadShootDirection));
-			}
-			else if (Input.GetAxis("ShootHorizontal") == 1 || Input.GetKey(KeyCode.RightArrow))
-			{
-				isShootingVertical = false;
-				StopAllCoroutines();
-
-				quadShootDirection = Direction.right;
-				isShootingHorizontal = true;
-				StartCoroutine(quadShoot(quadShootDirection));
-			}
+		// Which axis has the highest priority?
+		Direction dir = Direction.none;
+		if (Mathf.Abs (axisH) >= Mathf.Abs (axisV)) {
+			if (axisH < -0.50f)
+				dir = Direction.left;
+			else if (axisH > 0.50f)
+				dir = Direction.right;
 		}
-		if (!isShootingVertical)
-		{
-			if (Input.GetAxis("ShootVertical") == -1 || Input.GetKey(KeyCode.DownArrow))
-			{
-				isShootingHorizontal = false;
-				StopAllCoroutines();
-
-				quadShootDirection = Direction.down;
-				isShootingVertical = true;
-				StartCoroutine(quadShoot(quadShootDirection));
-			}
-			else if (Input.GetAxis("ShootVertical") == 1 || Input.GetKey(KeyCode.UpArrow))
-			{
-				isShootingHorizontal = false;
-				StopAllCoroutines();
-
-				quadShootDirection = Direction.up;
-				isShootingVertical = true;
-				StartCoroutine(quadShoot(quadShootDirection));
-			}
+		else {
+			if (axisV < -0.50f)
+				dir = Direction.down;
+			else if (axisV > 0.50f)
+				dir = Direction.up;
 		}
 
+		// Let keyboard controls override the joystick.
+		if (Input.GetKey (KeyCode.LeftArrow))
+			dir = Direction.left;
+		else if (Input.GetKey (KeyCode.RightArrow))
+			dir = Direction.right;
+		else if (Input.GetKey (KeyCode.DownArrow))
+			dir = Direction.down;
+		else if (Input.GetKey (KeyCode.UpArrow))
+			dir = Direction.up;
+
+		// Store our shooting state.
+		quadShootDirection = dir;
+		switch (dir) {
+			case Direction.left:
+			case Direction.right:
+				isShootingHorizontal = true;
+				isShootingVertical = false;
+				break;
+
+			case Direction.up:
+			case Direction.down:
+				isShootingHorizontal = false;
+				isShootingVertical = true;
+				break;
+
+			default:
+				isShootingHorizontal = false;
+				isShootingVertical = false;
+				break;
+		}
+
+		// Do we need to start shooting?
+		if (dir != Direction.none && !isQuadShootRunning) {
+			isQuadShootRunning = true;
+			StartCoroutine (quadShoot ());
+		}
+
+/*
 		if (isShootingHorizontal)
 		{
 			if (Input.GetAxis("ShootHorizontal") != 1 && Input.GetAxis("ShootHorizontal") != -1
@@ -282,21 +296,19 @@ public class Player : MonoBehaviour
 				StopCoroutine(quadShoot(Direction.down));
 			}
 		}
-
+*/
 	}
 
-	IEnumerator quadShoot(Direction direction)
+	IEnumerator quadShoot()
 	{
 		while (isShootingHorizontal || isShootingVertical)
 		{
-			yield return new WaitForSeconds(playerShootRate);
-
 			GameObject tempProjectile = (GameObject) Instantiate(playerProjectilePrefab, transform.position, Quaternion.identity);
 
 			// TODO: rotate projectile sprite relative to shoot direction
 
 			Vector2 projectileDirection = Vector2.zero;
-			switch (direction)
+			switch (quadShootDirection)
 			{
 				case Direction.left:
 				{
@@ -325,7 +337,9 @@ public class Player : MonoBehaviour
 			projectileDirection *= bulletSpeed;
 
 			tempProjectile.GetComponent<Rigidbody2D>().AddForce(projectileDirection);
+			yield return new WaitForSeconds(playerShootRate);			
 		}
+		isQuadShootRunning = false;
 	}
 		
 	void rotationShooting()

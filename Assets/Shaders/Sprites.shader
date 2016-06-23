@@ -7,6 +7,7 @@ Shader "Custom/Sprites"
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0.00
 		_Hover ("Hover", Float) = 0.00
 		_HoverSpeed ("Hover Speed", Float) = 1.00
+		_Glow ("Glow", Float) = 0.00
 	}
 
 	SubShader
@@ -48,7 +49,7 @@ Shader "Custom/Sprites"
 			};
 			
 			fixed4 _Color;
-			float _Hover, _HoverSpeed;
+			float _Hover, _HoverSpeed, _Glow;
 			static const float PI = 3.14159265f;
 
 			v2f vert(appdata_t IN)
@@ -57,7 +58,7 @@ Shader "Custom/Sprites"
 				OUT.vertex = mul(UNITY_MATRIX_MVP, IN.vertex);
 				OUT.vertex.y += sin (_Time[1] * PI * _HoverSpeed) * _Hover;
 				OUT.texcoord = IN.texcoord;
-				OUT.color = IN.color * _Color;
+				OUT.color = IN.color * _Color + _Glow;
 				#ifdef PIXELSNAP_ON
 				OUT.vertex = UnityPixelSnap (OUT.vertex);
 				#endif

@@ -139,6 +139,10 @@ Material:
         first:
           name: _HoverSpeed
         second: 1
+      data:
+        first:
+          name: _Glow
+        second: 0
     m_Colors:
       data:
         first:

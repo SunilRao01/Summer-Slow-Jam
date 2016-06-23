@@ -317,6 +317,8 @@ public class Boss_1 : MonoBehaviour
 	{
 		health--;
 		healthLabel.text = health.ToString();
+		GetComponent<GenericSprite>().damage ();
+		transform.Find ("Boss_1_Glow").GetComponent<GenericSprite> ().damage ();
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
