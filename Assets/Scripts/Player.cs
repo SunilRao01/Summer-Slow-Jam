@@ -220,7 +220,7 @@ public class Player : MonoBehaviour
 	{
 		if (!isShootingHorizontal)
 		{
-			if (Input.GetAxis("ShootHorizontal") == -1)
+			if (Input.GetAxis("ShootHorizontal") == -1 || Input.GetKey(KeyCode.LeftArrow))
 			{
 				isShootingVertical = false;
 				StopAllCoroutines();
@@ -229,7 +229,7 @@ public class Player : MonoBehaviour
 				isShootingHorizontal = true;
 				StartCoroutine(quadShoot(quadShootDirection));
 			}
-			else if (Input.GetAxis("ShootHorizontal") == 1)
+			else if (Input.GetAxis("ShootHorizontal") == 1 || Input.GetKey(KeyCode.RightArrow))
 			{
 				isShootingVertical = false;
 				StopAllCoroutines();
@@ -241,7 +241,7 @@ public class Player : MonoBehaviour
 		}
 		if (!isShootingVertical)
 		{
-			if (Input.GetAxis("ShootVertical") == -1)
+			if (Input.GetAxis("ShootVertical") == -1 || Input.GetKey(KeyCode.DownArrow))
 			{
 				isShootingHorizontal = false;
 				StopAllCoroutines();
@@ -250,7 +250,7 @@ public class Player : MonoBehaviour
 				isShootingVertical = true;
 				StartCoroutine(quadShoot(quadShootDirection));
 			}
-			else if (Input.GetAxis("ShootVertical") == 1)
+			else if (Input.GetAxis("ShootVertical") == 1 || Input.GetKey(KeyCode.UpArrow))
 			{
 				isShootingHorizontal = false;
 				StopAllCoroutines();
@@ -263,7 +263,8 @@ public class Player : MonoBehaviour
 
 		if (isShootingHorizontal)
 		{
-			if (Input.GetAxis("ShootHorizontal") != 1 && Input.GetAxis("ShootHorizontal") != -1)
+			if (Input.GetAxis("ShootHorizontal") != 1 && Input.GetAxis("ShootHorizontal") != -1
+			    && Input.GetKey(KeyCode.LeftArrow) != true && Input.GetKey(KeyCode.RightArrow) != true)
 			{
 				isShootingHorizontal = false;
 				StopCoroutine(quadShoot(Direction.left));
@@ -272,7 +273,8 @@ public class Player : MonoBehaviour
 		}
 		if (isShootingVertical)
 		{
-			if (Input.GetAxis("ShootVertical") != 1 && Input.GetAxis("ShootVertical") != -1)
+			if (Input.GetAxis("ShootVertical") != 1 && Input.GetAxis("ShootVertical") != -1
+			    && Input.GetKey(KeyCode.UpArrow) != true && Input.GetKey(KeyCode.DownArrow) != true)
 			{
 				isShootingVertical = false;
 				StopCoroutine(quadShoot(Direction.up));

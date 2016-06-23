@@ -60,14 +60,12 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: .00167704199, y: .0607136935}
-      - {x: -.119999997, y: .0949999988}
-      - {x: -.0965213478, y: .0339442566}
-      - {x: -.0535865724, y: -.0136448862}
-      - {x: -.0150306532, y: -.0942546427}
-      - {x: .0147202276, y: -.0946273133}
-      - {x: .0528568737, y: -.0293475688}
-      - {x: .103974879, y: .0387267694}
+    - - {x: -.119999997, y: .0949999988}
+      - {x: -.119999997, y: .0250000004}
+      - {x: -.0399999991, y: -.0949999988}
+      - {x: .0299999993, y: -.0949999988}
+      - {x: .0700000003, y: -.0450000018}
+      - {x: .119999997, y: .0350000001}
       - {x: .119999997, y: .0949999988}
 --- !u!114 &11435132
 MonoBehaviour:
@@ -80,7 +78,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f86737558885a564590ce9af359afcba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {x: 0, y: 0, z: 0}
+  targetPosition: {fileID: 0}
+  positionalSprites:
+  - {fileID: 21300000, guid: 8ac43dffc8335f94fad6bcda5e1e8d21, type: 3}
+  - {fileID: 21300002, guid: 8ac43dffc8335f94fad6bcda5e1e8d21, type: 3}
+  - {fileID: 21300004, guid: 8ac43dffc8335f94fad6bcda5e1e8d21, type: 3}
+  - {fileID: 21300006, guid: 8ac43dffc8335f94fad6bcda5e1e8d21, type: 3}
+  - {fileID: 21300008, guid: 8ac43dffc8335f94fad6bcda5e1e8d21, type: 3}
+  - {fileID: 21300010, guid: 8ac43dffc8335f94fad6bcda5e1e8d21, type: 3}
+  - {fileID: 21300012, guid: 8ac43dffc8335f94fad6bcda5e1e8d21, type: 3}
+  - {fileID: 21300014, guid: 8ac43dffc8335f94fad6bcda5e1e8d21, type: 3}
 --- !u!212 &21257644
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -113,7 +120,41 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: positionalSprites.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: positionalSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8ac43dffc8335f94fad6bcda5e1e8d21,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: positionalSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300002, guid: 8ac43dffc8335f94fad6bcda5e1e8d21,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: positionalSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300004, guid: 8ac43dffc8335f94fad6bcda5e1e8d21,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: positionalSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300006, guid: 8ac43dffc8335f94fad6bcda5e1e8d21,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: positionalSprites.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300008, guid: 8ac43dffc8335f94fad6bcda5e1e8d21,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: positionalSprites.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300010, guid: 8ac43dffc8335f94fad6bcda5e1e8d21,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 194218}

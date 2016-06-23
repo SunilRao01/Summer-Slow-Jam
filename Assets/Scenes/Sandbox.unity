@@ -534,7 +534,7 @@ GameObject:
   - 60: {fileID: 1104994351}
   m_Layer: 0
   m_Name: Bounds
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -948,7 +948,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1887547745}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0399999991, y: 2.38699293, z: 0}
+  m_LocalPosition: {x: .0399999991, y: 1.16999996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1100935027}
@@ -1002,8 +1002,8 @@ MonoBehaviour:
   phase1ShootSpeed: 200
   phase1ProjectilePrefab: {fileID: 110938, guid: 4d4c323b22b74f84a8f248a55be8af53,
     type: 2}
-  phase2MovementSpeed: 1
-  minionPrefab: {fileID: 0}
+  phase2MovementSpeed: 5
+  minionPrefab: {fileID: 194218, guid: ee9e473d68c70f342a941ae371910755, type: 2}
   phase3MovementSpeed: 5
   playerTransform: {fileID: 0}
 --- !u!1 &1958002153

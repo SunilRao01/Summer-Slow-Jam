@@ -61,6 +61,7 @@ public class Boss_1 : MonoBehaviour
 			StopAllCoroutines();
 			currentPhase++;
 			phased = false;
+			phasing = false;
 		}
 		else if (health != 66 && health != 33)
 		{
@@ -210,18 +211,14 @@ public class Boss_1 : MonoBehaviour
 			}
 			else
 			{
-				// TODO
+				yield return new WaitForSeconds(0.9f);
+
+				findClosestPlayer();
+
+				GameObject tempMinion = (GameObject) Instantiate(minionPrefab, transform.position, Quaternion.identity);
+				tempMinion.GetComponent<Minion>().targetPosition = currentTarget;
+				tempMinion.GetComponent<Minion>().startMinion();
 			}
-		}
-	}
-
-	IEnumerator phase2SpawnMinions()
-	{
-		while (currentPhase == 2)
-		{
-			yield return new WaitForSeconds(0.1f);
-
-			GameObject tempMinion = (GameObject) Instantiate(minionPrefab, transform.position, Quaternion.identity);
 		}
 	}
 
