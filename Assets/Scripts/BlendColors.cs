@@ -36,7 +36,7 @@ public class BlendColors : MonoBehaviour
 		blendColors = new List<Color>();
 		blendColors.Add(Color.white);
 
-		colorChangeRate = 0.1f;
+		colorChangeRate = 1.0f;
 	}
 
 	void Awake () 
@@ -114,11 +114,11 @@ public class BlendColors : MonoBehaviour
 				newColor.a = customAlphaValue;
 			}
 
-			colorCount += colorChangeRate;
+			colorCount += colorChangeRate * Time.deltaTime;
 		}
 		else if (colorCount > 0 && colorCount < 1)
 		{
-			colorCount += colorChangeRate;
+			colorCount += colorChangeRate * Time.deltaTime;
 		}
 		else if (colorCount >= 1)
 		{

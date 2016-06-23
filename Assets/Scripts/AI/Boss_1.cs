@@ -57,7 +57,6 @@ public class Boss_1 : MonoBehaviour
 			default:
 				break;
 		}
-
 	}
 
 	private void findClosestPlayer()
