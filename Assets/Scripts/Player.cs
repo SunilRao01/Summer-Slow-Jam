@@ -473,8 +473,14 @@ public class Player : MonoBehaviour
 			if (other.gameObject.CompareTag("Minion") 
 			    || other.gameObject.CompareTag("EnemyProjectile"))
 			{
-				gameManager.win = false;
-				Application.LoadLevel(2);
+				health--;
+
+				if (health <= 0)
+				{
+					gameManager.win = false;
+					Application.LoadLevel(2);
+				}
+
 			}
 		}
 	}
