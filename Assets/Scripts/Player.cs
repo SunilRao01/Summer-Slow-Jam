@@ -293,7 +293,7 @@ public class Player : MonoBehaviour
 
 		if (o_rigidbody.velocity.magnitude < playerMaxMovementSpeed)
 		{
-			o_rigidbody.AddForce(movementDirection);
+			o_rigidbody.AddForce(movementDirection.normalized * 100);
 		}
 	}
 
