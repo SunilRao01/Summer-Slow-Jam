@@ -168,12 +168,11 @@ public class Player : MonoBehaviour
 
 			playerMovementSpeed = 150;
 
-			if (gameObject.name == "Player_2")
-			{
+
 				GetComponent<BoxCollider2D>().enabled = true;
 				GetComponent<Rigidbody2D>().isKinematic = false;
 				GetComponent<SpriteRenderer>().enabled = true;
-			}
+			
 		}
 		else
 		{

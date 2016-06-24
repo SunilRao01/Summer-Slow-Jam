@@ -282,7 +282,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 1000
+  m_Text: 500
 --- !u!222 &517493365
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1950,7 +1950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4380f5421366cf047bb5caecdfb331ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 500
   healthLabel: {fileID: 517493364}
   currentPhase: 1
   boxPrefab: {fileID: 0}
