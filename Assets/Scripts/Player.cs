@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
 	// Animations and effects
 	private float flashTime;
 
-
+	private GameObject o_otherPlayer;
 	private float horizontalMovement;
 	private float verticalMovement;
 	private float horizontalShooting;
@@ -61,6 +61,15 @@ public class Player : MonoBehaviour
 		// Initialize local variables
 		o_spriteRenderer = GetComponent<SpriteRenderer>();
 		o_rigidbody = GetComponent<Rigidbody2D>();
+
+		if (gameObject.name == "Player_1")
+		{
+			o_otherPlayer = GameObject.Find("Player_2");
+		}
+		else
+		{
+			o_otherPlayer = GameObject.Find("Player_1");
+		}
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 		// Default direction currently facing up
@@ -79,11 +88,16 @@ public class Player : MonoBehaviour
 		// TEMP For dev
 		devModeCommands();
 
-		if (combined)
+		if (combined && gameObject.name == "Player_2")
 		{
 			rotationShooting();
+
+			if (Input.GetButtonDown("Seperate"))
+			{
+				toggleCombinedMode();
+			}
 		}
-		else
+		else if (!combined)
 		{
 			quadShooting();
 		}
@@ -110,7 +124,10 @@ public class Player : MonoBehaviour
 
 		if (combined)
 		{
-			combinedMovement();
+			if (gameObject.name == "Player_1")
+			{
+				combinedMovement();
+			}
 		}
 		else
 		{
@@ -143,10 +160,35 @@ public class Player : MonoBehaviour
 		if (combined)
 		{
 			combined = false;
+
+			playerMovementSpeed = 150;
+
+			if (gameObject.name == "Player_2")
+			{
+				GetComponent<BoxCollider2D>().enabled = true;
+				GetComponent<Rigidbody2D>().isKinematic = false;
+				GetComponent<SpriteRenderer>().enabled = true;
+			}
 		}
 		else
 		{
 			combined = true;
+
+
+			playerMovementSpeed -= 20;
+
+			if (gameObject.name == "Player_2")
+			{
+				GetComponent<BoxCollider2D>().enabled = false;
+				GetComponent<Rigidbody2D>().isKinematic = true;
+				GetComponent<SpriteRenderer>().enabled = false;
+
+				transform.position = o_otherPlayer.transform.position;
+			}
+			else if (gameObject.name == "Player_1")
+			{
+				playerMovementSpeed = 75;
+			}
 		}
 
 		// Change sprite
@@ -162,31 +204,36 @@ public class Player : MonoBehaviour
 
 	void combinedMovement()
 	{
-		Vector2 movementDirection = new Vector2(horizontalMovement, verticalMovement);
-		movementDirection *= playerMovementSpeed;
-		
-		// TEMP Set sprite by direction
-		// Note: Down, Up, Left, Right
-		if (horizontalMovement == 1)
+		if (gameObject.name == "Player_1")
 		{
-			o_spriteRenderer.sprite = currentDirectionalSprites[3];
-		}
-		else if (horizontalMovement == -1)
-		{
-			o_spriteRenderer.sprite = currentDirectionalSprites[2];
-		}
-		if (verticalMovement == 1)
-		{
-			o_spriteRenderer.sprite = currentDirectionalSprites[1];
-		}
-		else if (verticalMovement == -1)
-		{
-			o_spriteRenderer.sprite = currentDirectionalSprites[0];
-		}
-		
-		if (o_rigidbody.velocity.magnitude < playerMaxMovementSpeed)
-		{
-			o_rigidbody.AddForce(movementDirection);
+			o_otherPlayer.transform.position = transform.position;
+
+			Vector2 movementDirection = new Vector2(horizontalMovement, verticalMovement);
+			movementDirection *= playerMovementSpeed;
+			
+			// TEMP Set sprite by direction
+			// Note: Down, Up, Left, Right
+			if (horizontalMovement == 1)
+			{
+				o_spriteRenderer.sprite = currentDirectionalSprites[3];
+			}
+			else if (horizontalMovement == -1)
+			{
+				o_spriteRenderer.sprite = currentDirectionalSprites[2];
+			}
+			if (verticalMovement == 1)
+			{
+				o_spriteRenderer.sprite = currentDirectionalSprites[1];
+			}
+			else if (verticalMovement == -1)
+			{
+				o_spriteRenderer.sprite = currentDirectionalSprites[0];
+			}
+			
+			if (o_rigidbody.velocity.magnitude < playerMaxMovementSpeed)
+			{
+				o_rigidbody.AddForce(movementDirection);
+			}
 		}
 	}
 
@@ -380,12 +427,6 @@ public class Player : MonoBehaviour
 		{
 			// Change shooting mode
 			toggleCombinedMode();
-
-			if (gameObject.name == "Player_2")
-			{
-				Destroy(other.gameObject.GetComponent<Player>());
-				other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-			}
 		}
 
 
@@ -433,10 +474,5 @@ public class Player : MonoBehaviour
 			}
 		}
 	}
-	/*
-	void takeDamage (float amount)
-	{
 
-	}
-	*/
 }
