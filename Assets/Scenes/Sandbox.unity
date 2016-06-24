@@ -581,10 +581,6 @@ Prefab:
       propertyPath: godMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5057196, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: health
       value: 5
@@ -1446,10 +1442,6 @@ Prefab:
       objectReference: {fileID: 2100000, guid: a16acc0ff47cfa14b94faefba9234d7b, type: 2}
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: godMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5057196, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
-      propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}

@@ -458,19 +458,8 @@ public class Player : MonoBehaviour
 			projectileDirection *= combinedBulletSpeed;
 			
 			tempProjectile.GetComponent<Rigidbody2D>().AddForce(projectileDirection);
-
-			if (projectileDirection.x > 0)
-			{
-				tempProjectile.transform.Rotate(Vector3.forward, 270);
-			}
-			else if (projectileDirection.x < 0)
-			{
-				tempProjectile.transform.Rotate(Vector3.forward, 90);
-			}
-			else if (projectileDirection.y < 0)
-			{
-				tempProjectile.transform.Rotate(Vector3.forward, 180);
-			}
+			float angle = Mathf.Atan2 (projectileDirection.y, projectileDirection.x);
+			tempProjectile.transform.Rotate (Vector3.forward, angle / Mathf.PI * 180.00f - 90.00f);
 		}
 	}
 
