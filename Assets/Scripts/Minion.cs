@@ -7,50 +7,32 @@ public class Minion : MonoBehaviour
 	private int health = 3;
 	public Transform targetPosition;
 	private Rigidbody2D o_rigidbody;
+	public GameObject myShadow;
+	public float maxVelocity;
 
 	public List<Sprite> positionalSprites;
+	private SpriteRenderer o_renderer;
 
 	void Awake()
 	{
 		o_rigidbody = GetComponent<Rigidbody2D>();
+		o_renderer = GetComponent<SpriteRenderer> ();
+	}
+
+	void Start ()
+	{
+		// Add some randomness to our velocity so minions don't clump together.
+		maxVelocity *= Random.Range (0.75f, 1.25f);
+
+		// Spawn a shadow.
+		GameObject shadow = Instantiate (myShadow, 
+		   transform.position + new Vector3 (0.00f, -0.25f, 0.00f),
+		   transform.rotation) as GameObject;
+		shadow.transform.parent = transform;
 	}
 
 	void Update () 
 	{
-		if (o_rigidbody.velocity.x > 0.5f && o_rigidbody.velocity.y > 0.5f)
-		{
-			GetComponent<SpriteRenderer>().sprite = positionalSprites[2];
-		}
-		else if (o_rigidbody.velocity.x > 0.5f && o_rigidbody.velocity.y < 0.5f)
-		{
-			GetComponent<SpriteRenderer>().sprite = positionalSprites[1];
-		}
-		else if (o_rigidbody.velocity.x > 0.5f && o_rigidbody.velocity.y <= 0.5f)
-		{
-			GetComponent<SpriteRenderer>().sprite = positionalSprites[6];
-		}
-
-		if (o_rigidbody.velocity.x < 0.5f && o_rigidbody.velocity.y > 0.5f)
-		{
-			GetComponent<SpriteRenderer>().sprite = positionalSprites[4];
-		}
-		else if (o_rigidbody.velocity.x < 0.5f && o_rigidbody.velocity.y < 0.5f)
-		{
-			GetComponent<SpriteRenderer>().sprite = positionalSprites[7];
-		}
-		else if (o_rigidbody.velocity.x < 0.5f && o_rigidbody.velocity.y <= 0.5f)
-		{
-			GetComponent<SpriteRenderer>().sprite = positionalSprites[5];
-		}
-
-		if (o_rigidbody.velocity.x <= 0.5f && o_rigidbody.velocity.y <= 0)
-		{
-			GetComponent<SpriteRenderer>().sprite = positionalSprites[0];
-		}
-		else if (o_rigidbody.velocity.x <= 0.5f && o_rigidbody.velocity.y > 0)
-		{
-			GetComponent<SpriteRenderer>().sprite = positionalSprites[3];
-		}
 	}
 
 	public void startMinion()
@@ -69,6 +51,7 @@ public class Minion : MonoBehaviour
 		{
 			Destroy (gameObject);
 		}
+		GetComponent<GenericSprite>().damage ();
 	}
 
 	IEnumerator minionMovement()
@@ -77,11 +60,21 @@ public class Minion : MonoBehaviour
 		{
 			yield return new WaitForSeconds(0.1f);
 
-
 			Vector2 shootDirection = (Vector2)targetPosition.position - (Vector2)transform.position;
+
+			// Apply movement.
 			shootDirection.Normalize();
-			
-			o_rigidbody.AddRelativeForce(shootDirection* 10);
+			o_rigidbody.velocity = o_rigidbody.velocity + shootDirection * 0.5f;
+
+			// What direction are we facing?  Get the angle from our velocity.
+			int dir = ((int) Mathf.Round (
+				Mathf.Atan2 (o_rigidbody.velocity.y, o_rigidbody.velocity.x) /
+				Mathf.PI * 4.00f + 8.00f)) % 8;
+			o_renderer.sprite = positionalSprites [dir];
+
+			// Don't go too fast.
+			if (o_rigidbody.velocity.magnitude > maxVelocity)
+				o_rigidbody.velocity = o_rigidbody.velocity.normalized * maxVelocity;
 		}
 	}
 
@@ -89,6 +82,7 @@ public class Minion : MonoBehaviour
 	{
 		if (other.CompareTag("PlayerProjectile"))
 		{
+			Destroy (other.gameObject);
 			damage();
 		}
 	}

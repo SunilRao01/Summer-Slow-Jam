@@ -274,29 +274,6 @@ public class Player : MonoBehaviour
 			isQuadShootRunning = true;
 			StartCoroutine (quadShoot ());
 		}
-
-/*
-		if (isShootingHorizontal)
-		{
-			if (Input.GetAxis("ShootHorizontal") != 1 && Input.GetAxis("ShootHorizontal") != -1
-			    && Input.GetKey(KeyCode.LeftArrow) != true && Input.GetKey(KeyCode.RightArrow) != true)
-			{
-				isShootingHorizontal = false;
-				StopCoroutine(quadShoot(Direction.left));
-				StopCoroutine(quadShoot(Direction.right));
-			}
-		}
-		if (isShootingVertical)
-		{
-			if (Input.GetAxis("ShootVertical") != 1 && Input.GetAxis("ShootVertical") != -1
-			    && Input.GetKey(KeyCode.UpArrow) != true && Input.GetKey(KeyCode.DownArrow) != true)
-			{
-				isShootingVertical = false;
-				StopCoroutine(quadShoot(Direction.up));
-				StopCoroutine(quadShoot(Direction.down));
-			}
-		}
-*/
 	}
 
 	IEnumerator quadShoot()

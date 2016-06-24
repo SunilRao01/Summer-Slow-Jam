@@ -134,11 +134,15 @@ Material:
       data:
         first:
           name: _Hover
-        second: .00999999978
+        second: .00499999989
       data:
         first:
           name: _HoverSpeed
-        second: 1.5
+        second: 2.5
+      data:
+        first:
+          name: _Glow
+        second: 0
     m_Colors:
       data:
         first:

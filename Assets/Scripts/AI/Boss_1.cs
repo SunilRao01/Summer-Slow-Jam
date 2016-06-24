@@ -223,9 +223,13 @@ public class Boss_1 : MonoBehaviour
 
 				findClosestPlayer();
 
-				GameObject tempMinion = (GameObject) Instantiate(minionPrefab, transform.position, Quaternion.identity);
-				tempMinion.GetComponent<Minion>().targetPosition = currentTarget;
-				tempMinion.GetComponent<Minion>().startMinion();
+				GameObject[] minions = GameObject.FindGameObjectsWithTag ("Minion");
+				if (minions.Length < 15) {
+					GameObject tempMinion = (GameObject) Instantiate(minionPrefab, transform.position, Quaternion.identity);
+					tempMinion.GetComponent<Minion>().targetPosition = currentTarget;
+					tempMinion.GetComponent<Minion>().startMinion();
+					tempMinion.tag = "Minion";
+				}
 			}
 		}
 	}
@@ -259,8 +263,6 @@ public class Boss_1 : MonoBehaviour
 			{
 				// TODO: Check if destination is reached (or reached enough)
 				Vector2 distanceVector = (Vector2)transform.position - currentTargetPosition;
-
-				Debug.Log(distanceVector.magnitude.ToString());
 
 				if (distanceVector.magnitude > 0.5f)
 				{

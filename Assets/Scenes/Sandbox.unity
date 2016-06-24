@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &226581061
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,6 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &517493362
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,6 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &618240017
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,6 +424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1001 &638795577
 Prefab:
   m_ObjectHideFlags: 0
@@ -644,6 +648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &652403957
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &784257614
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: -3.0999999
+  timeInterval: .100000001
 --- !u!1 &942404527
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,6 +876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &1088897345
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,7 +961,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &1100935026
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,6 +1029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &1104994348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,6 +1227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &1221837388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1285,6 +1295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1001 &1531574441
 Prefab:
   m_ObjectHideFlags: 0
@@ -1454,6 +1465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &1577240828
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,6 +1533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &1735189707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,6 +1601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &1758252036
 GameObject:
   m_ObjectHideFlags: 0
@@ -1655,6 +1669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &1819866071 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 121990, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
@@ -1684,6 +1699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &1870014536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1825,6 +1841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &1887547745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,6 +1966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: -3
+  timeInterval: .100000001
 --- !u!1 &1958002153
 GameObject:
   m_ObjectHideFlags: 0
