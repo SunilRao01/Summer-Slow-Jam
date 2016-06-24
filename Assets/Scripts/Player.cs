@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
 	public bool godMode;
 
-	public float health;
+	public float health, maxHealth;
 
 	// TEMP No Animation
 	// Note: Down, Up, Left, Right
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 	private Direction quadShootDirection;
 
 	// Combined Full Rotational Shooting
-	private bool combined;
+	public bool combined;
 	public GameObject playerCombinedProjectilePrefab;
 	public float playerCombinedShootRate;
 	public float combinedBulletSpeed;
@@ -48,7 +48,8 @@ public class Player : MonoBehaviour
 	// Animations and effects
 	private float flashTime;
 
-	private GameObject o_otherPlayer;
+	private GameObject o_otherPlayerObject;
+	private Player o_otherPlayer;
 	private float horizontalMovement;
 	private float verticalMovement;
 	private float horizontalShooting;
@@ -56,26 +57,24 @@ public class Player : MonoBehaviour
 
 	void Awake()
 	{
-
-
 		// Initialize local variables
 		o_spriteRenderer = GetComponent<SpriteRenderer>();
 		o_rigidbody = GetComponent<Rigidbody2D>();
+		maxHealth = health;
 
 		if (gameObject.name == "Player_1")
-		{
-			o_otherPlayer = GameObject.Find("Player_2");
-		}
+			o_otherPlayerObject = GameObject.Find("Player_2");
 		else
-		{
-			o_otherPlayer = GameObject.Find("Player_1");
-		}
+			o_otherPlayerObject = GameObject.Find("Player_1");
+		o_otherPlayer = o_otherPlayerObject.GetComponent<Player> ();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 		// Default direction currently facing up
 		o_spriteRenderer.sprite = facingDirectionSprites[0];
 		currentDirectionalSprites = facingDirectionSprites;
 
+		Physics2D.IgnoreCollision (GetComponent<Collider2D>(),
+		       o_otherPlayerObject.GetComponent<Collider2D>());
 	}
 
 	void Start () 
@@ -88,23 +87,37 @@ public class Player : MonoBehaviour
 		// TEMP For dev
 		devModeCommands();
 
-		if (combined && gameObject.name == "Player_2")
+		if (gameObject.name == "Player_2")
 		{
-			rotationShooting();
-
-			if (Input.GetButtonDown("Seperate") && combined)
+			if (Input.GetButtonDown("Seperate") || Input.GetKeyDown (KeyCode.Space))
 			{
-				toggleCombinedMode();
+				float dist = Vector3.Distance (transform.position,
+				   o_otherPlayerObject.transform.position);
+				if (dist < 0.50f || combined)
+					toggleCombinedMode();
 			}
+			if (combined)
+				rotationShooting();
+			else
+				quadShooting ();
 		}
-		else if (!combined)
+		else
 		{
-			quadShooting();
+			if (!combined)
+				quadShooting();
 		}
 
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			Application.Quit();
+		}
+
+		// Regenerate Health
+		if (health < maxHealth) {
+			float newHealth = health + Time.deltaTime * 0.50f;
+			if (Mathf.Floor (newHealth * 10.00f) != Mathf.Floor (health * 10.00f))
+				updateColor ();
+			health = newHealth;
 		}
 	}
 	
@@ -145,13 +158,22 @@ public class Player : MonoBehaviour
 		if (Input.GetButtonDown("DEV Mode Switch"))
 		{
 			Debug.Log("Switch mode");
-
 			toggleCombinedMode();
-
 		}
 	}
 
 	void toggleCombinedMode()
+	{
+		if (gameObject.name == "Player_2") {
+			o_otherPlayer.toggleCombinedModeReal ();
+			toggleCombinedModeReal ();
+		} else {
+			toggleCombinedModeReal ();
+			o_otherPlayer.toggleCombinedModeReal ();
+		}
+	}
+	
+	public void toggleCombinedModeReal ()
 	{
 		isShooting = false;
 		isShootingHorizontal = false;
@@ -160,38 +182,35 @@ public class Player : MonoBehaviour
 		// Stop current shooting
 		StopAllCoroutines();
 
-
-
 		if (combined)
 		{
 			combined = false;
-
-			playerMovementSpeed = 150;
-
-
+			// If we've the first one to separate, update player positions.
+			if (o_otherPlayer.combined) {
+				Vector3 pos = transform.position;
+				transform.position               = pos + new Vector3 (-0.33f, 0.00f, 0.00f);
+				o_otherPlayer.transform.position = pos + new Vector3 ( 0.33f, 0.00f, 0.00f);
+			}
+			if (gameObject.name == "Player_2") {
 				GetComponent<BoxCollider2D>().enabled = true;
-				GetComponent<Rigidbody2D>().isKinematic = false;
 				GetComponent<SpriteRenderer>().enabled = true;
-			
+			}
+			else {
+				playerMovementSpeed = 150;
+			}
 		}
 		else
 		{
 			combined = true;
-
-
-			playerMovementSpeed -= 20;
-
 			if (gameObject.name == "Player_2")
 			{
 				GetComponent<BoxCollider2D>().enabled = false;
-				GetComponent<Rigidbody2D>().isKinematic = true;
 				GetComponent<SpriteRenderer>().enabled = false;
-
 				transform.position = o_otherPlayer.transform.position;
 			}
 			else if (gameObject.name == "Player_1")
 			{
-				playerMovementSpeed = 75;
+				playerMovementSpeed = 50;
 			}
 		}
 
@@ -204,6 +223,7 @@ public class Player : MonoBehaviour
 		{
 			currentDirectionalSprites = combinedFacingDirectionSprites;
 		}
+		o_spriteRenderer.sprite = currentDirectionalSprites [0];
 	}
 
 	void combinedMovement()
@@ -410,6 +430,7 @@ public class Player : MonoBehaviour
 			
 			rotationalShootDirection = (lookPosition - (Vector2)transform.position);
 			rotationalShootDirection.Normalize();
+			rotationalShootDirection *= 4.00f;
 
 			if (!isShooting)
 			{
@@ -423,17 +444,6 @@ public class Player : MonoBehaviour
 			isShooting = false;
 			StopAllCoroutines();
 		}
-	}
-
-	void OnCollisionEnter2D(Collision2D other)
-	{
-		if (other.gameObject.CompareTag("Player"))
-		{
-			// Change shooting mode
-			toggleCombinedMode();
-		}
-
-
 	}
 
 	IEnumerator rotShoot()
@@ -470,13 +480,44 @@ public class Player : MonoBehaviour
 		// LOSE
 		if (!godMode)
 		{
-			if (other.gameObject.CompareTag("Minion") 
-			    || other.gameObject.CompareTag("EnemyProjectile"))
-			{
-				gameManager.win = false;
-				Application.LoadLevel(2);
+			bool destroy = false, hurt = false;
+			if (other.gameObject.CompareTag("Minion")) {
+			    hurt = true;
+			}
+			else if (other.gameObject.CompareTag("EnemyProjectile")) {
+				destroy = true;
+				hurt = true;
+			}
+			if (destroy) {
+				Destroy (other.gameObject);
+			}
+			if (hurt) {
+				if (!damage ())
+					if (combined)
+						o_otherPlayer.damage ();
 			}
 		}
 	}
 
+	bool damage()
+	{
+		health -= 1.00f;
+		if (health <= 0.00f) {
+			gameManager.win = false;
+			Application.LoadLevel (2);
+			return true;
+		}
+		else {
+			updateColor ();
+			GetComponent<GenericSprite>().damage ();
+			return false;
+		}
+	}
+
+	void updateColor ()
+	{
+		float percent = health / maxHealth;
+		Vector4 newColor = new Vector4 (1.00f + percent / 2.00f, percent, percent, 1.00f);
+		GetComponent<Renderer>().material.SetVector ("_Color", newColor);
+	}
 }

@@ -115,9 +115,9 @@ public class Boss_1 : MonoBehaviour
 
 	private void findClosestPlayer()
 	{
-		float player1Distance = Mathf.Abs((player1.transform.position - transform.position).magnitude);
-		float player2Distance = Mathf.Abs((player2.transform.position - transform.position).magnitude);
-		
+		float player1Distance = Vector4.Distance (player1.transform.position, transform.position);
+		float player2Distance = Vector4.Distance (player2.transform.position, transform.position);
+
 		if (player1Distance < player2Distance)
 		{
 			currentTarget = player1.transform;
@@ -215,7 +215,7 @@ public class Boss_1 : MonoBehaviour
 
 			GameObject tempProjectile = (GameObject) Instantiate(phase1ProjectilePrefab, transform.position, Quaternion.identity);
 
-			Vector2 shootDirection = player1.transform.position - transform.position;
+			Vector2 shootDirection = currentTarget.position - transform.position;
 			shootDirection.Normalize();
 
 			tempProjectile.GetComponent<Rigidbody2D>().AddRelativeForce(shootDirection * phase1ShootSpeed);
@@ -268,7 +268,7 @@ public class Boss_1 : MonoBehaviour
 
 			GameObject tempProjectile = (GameObject) Instantiate(phase1ProjectilePrefab, transform.position, Quaternion.identity);
 			
-			Vector2 shootDirection = player1.transform.position - transform.position;
+			Vector2 shootDirection = currentTarget.position - transform.position;
 			shootDirection.Normalize();
 			
 			tempProjectile.GetComponent<Rigidbody2D>().AddRelativeForce(shootDirection * phase1ShootSpeed);
