@@ -481,9 +481,9 @@ public class Player : MonoBehaviour
 				Destroy (other.gameObject);
 			}
 			if (hurt) {
-				if (!damage ())
-					if (combined)
-						o_otherPlayer.damage ();
+				// Hurt ourselves.  If we didn't end the game (and we're combined), hurt the other player as well.
+				if (!damage () && combined)
+					o_otherPlayer.damage ();
 			}
 		}
 	}
