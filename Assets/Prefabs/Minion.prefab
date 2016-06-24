@@ -15,7 +15,7 @@ GameObject:
   - 114: {fileID: 11495744}
   m_Layer: 0
   m_Name: Minion
-  m_TagString: Untagged
+  m_TagString: Minion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: -.25
+  timeInterval: .100000001
 --- !u!212 &21257644
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -199,6 +200,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: maxVelocity
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Minion
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

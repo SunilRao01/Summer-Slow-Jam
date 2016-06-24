@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Boss_1 : MonoBehaviour 
 {
 	// Stats
+	private GameManager gameManager;
 	private int maxHealth;
 	public int health = 1000;
 	public Text healthLabel;
@@ -48,6 +49,7 @@ public class Boss_1 : MonoBehaviour
 
 	void Awake () 
 	{
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		player1 = GameObject.Find("Player_1").gameObject;
 		player2 = GameObject.Find("Player_2").gameObject;
 
@@ -60,6 +62,12 @@ public class Boss_1 : MonoBehaviour
 
 	void Update () 
 	{
+		if (health <= 0)
+		{
+			gameManager.win = true;
+			Application.LoadLevel("EndMenu");
+		}
+
 		if (phased)
 		{
 			if ((health == ((maxHealth/3) * 2) || health == (maxHealth/3)))
