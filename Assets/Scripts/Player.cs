@@ -46,8 +46,16 @@ public class Player : MonoBehaviour
 	// Animations and effects
 	private float flashTime;
 
+
+	private float horizontalMovement;
+	private float verticalMovement;
+	private float horizontalShooting;
+	private float verticalShooting;
+
 	void Awake()
 	{
+
+
 		// Initialize local variables
 		o_spriteRenderer = GetComponent<SpriteRenderer>();
 		o_rigidbody = GetComponent<Rigidbody2D>();
@@ -81,6 +89,23 @@ public class Player : MonoBehaviour
 	
 	void FixedUpdate () 
 	{
+		if (gameObject.name == "Player_1")
+		{
+			horizontalMovement = Input.GetAxis("Horizontal");
+			verticalMovement = Input.GetAxis("Vertical");
+			
+			horizontalShooting = Input.GetAxis("ShootHorizontal");
+			verticalShooting = Input.GetAxis("ShootVertical");
+		}
+		else if (gameObject.name == "Player_2")
+		{
+			horizontalMovement = Input.GetAxis("Horizontal_2");
+			verticalMovement = Input.GetAxis("Vertical_2");
+			
+			horizontalShooting = Input.GetAxis("ShootHorizontal_2");
+			verticalShooting = Input.GetAxis("ShootVertical_2");
+		}
+
 		if (combined)
 		{
 			combinedMovement();
@@ -135,24 +160,24 @@ public class Player : MonoBehaviour
 
 	void combinedMovement()
 	{
-		Vector2 movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+		Vector2 movementDirection = new Vector2(horizontalMovement, verticalMovement);
 		movementDirection *= playerMovementSpeed;
 		
 		// TEMP Set sprite by direction
 		// Note: Down, Up, Left, Right
-		if (Input.GetAxis("Horizontal") == 1)
+		if (horizontalMovement == 1)
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[3];
 		}
-		else if (Input.GetAxis("Horizontal") == -1)
+		else if (horizontalMovement == -1)
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[2];
 		}
-		if (Input.GetAxis("Vertical") == 1)
+		if (verticalMovement == 1)
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[1];
 		}
-		else if (Input.GetAxis("Vertical") == -1)
+		else if (verticalMovement == -1)
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[0];
 		}
@@ -165,7 +190,7 @@ public class Player : MonoBehaviour
 
 	void movement()
 	{
-		Vector2 movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+		Vector2 movementDirection = new Vector2(horizontalMovement, verticalMovement);
 
 		// Temp keyboard controls
 		if (Input.GetKey(KeyCode.A))
@@ -196,19 +221,19 @@ public class Player : MonoBehaviour
 
 		// TEMP Set sprite by direction
 		// Note: Down, Up, Left, Right
-		if (Input.GetAxis("Horizontal") == 1 || Input.GetKey(KeyCode.D))
+		if (horizontalMovement == 1 || Input.GetKey(KeyCode.D))
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[3];
 		}
-		else if (Input.GetAxis("Horizontal") == -1 || Input.GetKey(KeyCode.A))
+		else if (horizontalMovement == -1 || Input.GetKey(KeyCode.A))
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[2];
 		}
-		if (Input.GetAxis("Vertical") == 1 || Input.GetKey(KeyCode.W))
+		if (verticalMovement == 1 || Input.GetKey(KeyCode.W))
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[1];
 		}
-		else if (Input.GetAxis("Vertical") == -1 || Input.GetKey(KeyCode.S))
+		else if (verticalMovement == -1 || Input.GetKey(KeyCode.S))
 		{
 			o_spriteRenderer.sprite = currentDirectionalSprites[0];
 		}
@@ -222,8 +247,8 @@ public class Player : MonoBehaviour
 	void quadShooting()
 	{
 		// Get our axis values.
-		float axisH = Input.GetAxis ("ShootHorizontal"),
-		      axisV = Input.GetAxis ("ShootVertical");
+		float axisH = horizontalShooting,
+		      axisV = verticalShooting;
 
 		// Which axis has the highest priority?
 		Direction dir = Direction.none;
@@ -323,12 +348,12 @@ public class Player : MonoBehaviour
 		
 	void rotationShooting()
 	{
-		//Debug.Log("Axis: " + Input.GetAxis("ShootHorizontal") + ", " + Input.GetAxis("ShootVertical"));
-		if (Input.GetAxis("ShootHorizontal") != 0 || Input.GetAxis("ShootVertical") != 0)
+		//Debug.Log("Axis: " + horizontalShooting + ", " + verticalShooting);
+		if (horizontalShooting != 0 || verticalShooting != 0)
 		{
 			Vector2 lookPosition = transform.position;
-			lookPosition.x += (Input.GetAxis("ShootHorizontal") * 5);
-			lookPosition.y += (Input.GetAxis("ShootVertical") * 5);
+			lookPosition.x += (horizontalShooting * 5);
+			lookPosition.y += (verticalShooting * 5);
 			
 			rotationalShootDirection = (lookPosition - (Vector2)transform.position);
 			rotationalShootDirection.Normalize();
