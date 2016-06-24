@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
 		{
 			rotationShooting();
 
-			if (Input.GetButtonDown("Seperate"))
+			if (Input.GetButtonDown("Seperate") && combined)
 			{
 				toggleCombinedMode();
 			}
@@ -100,6 +100,11 @@ public class Player : MonoBehaviour
 		else if (!combined)
 		{
 			quadShooting();
+		}
+
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			Application.Quit();
 		}
 	}
 	

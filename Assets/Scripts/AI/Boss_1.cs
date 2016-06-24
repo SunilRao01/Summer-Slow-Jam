@@ -205,8 +205,12 @@ public class Boss_1 : MonoBehaviour
 
 	IEnumerator phase1ShootingRoutines()
 	{
+
+
 		while (currentPhase == 1)
 		{
+
+
 			yield return new WaitForSeconds(0.5f);
 
 			GameObject tempProjectile = (GameObject) Instantiate(phase1ProjectilePrefab, transform.position, Quaternion.identity);
