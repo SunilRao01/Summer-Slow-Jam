@@ -577,6 +577,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a16acc0ff47cfa14b94faefba9234d7b, type: 2}
+    - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
+      propertyPath: godMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6148940, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
@@ -1342,7 +1346,7 @@ Prefab:
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: playerProjectilePrefab
       value: 
-      objectReference: {fileID: 152552, guid: be2cb661045528b41b89d7d2c2f9d644, type: 2}
+      objectReference: {fileID: 152552, guid: 0beb26fd69dccce4689cde31cde4d5e9, type: 2}
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: bulletSpeed
       value: 300
@@ -1432,6 +1436,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a16acc0ff47cfa14b94faefba9234d7b, type: 2}
+    - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
+      propertyPath: godMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6148940, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 25a8d54478492e54c998c48de092f76f, type: 2}

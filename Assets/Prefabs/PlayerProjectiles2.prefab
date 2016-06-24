@@ -11,9 +11,9 @@ GameObject:
   - 212: {fileID: 21241882}
   - 50: {fileID: 5050640}
   - 114: {fileID: 11445936}
-  - 60: {fileID: 6070300}
+  - 60: {fileID: 6043752}
   m_Layer: 0
-  m_Name: PlayerProjectiles
+  m_Name: PlayerProjectiles2
   m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .708022952, y: -2.22049212, z: 0}
+  m_LocalPosition: {x: 0, y: -2.22000003, z: 0}
   m_LocalScale: {x: 1.20000005, y: 1.20000005, z: 1.20000005}
   m_Children: []
   m_Father: {fileID: 0}
@@ -47,7 +47,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &6070300
+--- !u!60 &6043752
 PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -60,16 +60,16 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: .119999997, y: .150000006}
-      - {x: .0799999982, y: .159999996}
-      - {x: -.0799999982, y: .159999996}
-      - {x: -.119999997, y: .100000001}
-      - {x: -.119999997, y: -.0399999991}
-      - {x: -.0399999991, y: -.119999997}
-      - {x: .0399999991, y: -.119999997}
-      - {x: .119999997, y: -.0399999991}
-      - {x: .129999995, y: -.00999999978}
-      - {x: .129999995, y: .119999997}
+    - - {x: -.0646051466, y: .130318791}
+      - {x: -.134286374, y: .0215889998}
+      - {x: -.125556603, y: -.0147620831}
+      - {x: -.0388915092, y: -.138092428}
+      - {x: .00233865343, y: -.102259517}
+      - {x: .0476211905, y: -.139838248}
+      - {x: .118572734, y: .00269750739}
+      - {x: .134286299, y: .0373025723}
+      - {x: .0576824918, y: .132422239}
+      - {x: -.00174125028, y: .144286156}
 --- !u!114 &11445936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -105,7 +105,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: affe74ee269bea24e8ef0fec71b9fa8d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 20486395ad6331c44bb393cb7d87f5ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
@@ -129,7 +129,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: affe74ee269bea24e8ef0fec71b9fa8d,
+      objectReference: {fileID: 21300000, guid: 20486395ad6331c44bb393cb7d87f5ee,
         type: 3}
     - target: {fileID: 0}
       propertyPath: m_TagString

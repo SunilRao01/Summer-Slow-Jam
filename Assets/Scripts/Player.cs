@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 {
 	enum Direction {none, left, up, right, down};
 
+	public bool godMode;
+
 	public float health;
 
 	// TEMP No Animation
@@ -421,10 +423,14 @@ public class Player : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		// LOSE
-		if (other.gameObject.CompareTag("Minion") || other.gameObject.CompareTag("EnemyProjectile"))
+		if (!godMode)
 		{
-			gameManager.win = false;
-			Application.LoadLevel(2);
+			if (other.gameObject.CompareTag("Minion") 
+			    || other.gameObject.CompareTag("EnemyProjectile"))
+			{
+				gameManager.win = false;
+				Application.LoadLevel(2);
+			}
 		}
 	}
 	/*

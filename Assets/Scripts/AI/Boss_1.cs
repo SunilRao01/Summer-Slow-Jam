@@ -130,7 +130,18 @@ public class Boss_1 : MonoBehaviour
 
 	void phase0()
 	{
+		if (!phased)
+		{
+			StartCoroutine(initialPause());
+			phased = true;
+		}
+	}
 
+	IEnumerator initialPause()
+	{
+		yield return new WaitForSeconds(3.0f);
+		phased = false;
+		currentPhase++;
 	}
 
 	void phase1()
