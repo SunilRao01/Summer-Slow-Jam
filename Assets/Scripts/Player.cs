@@ -475,7 +475,7 @@ public class Player : MonoBehaviour
 			{
 				health--;
 
-				if (health <= 0)
+				if (health <= 0 && !godMode)
 				{
 					gameManager.win = false;
 					Application.LoadLevel(2);
