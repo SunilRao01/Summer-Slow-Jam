@@ -9,3 +9,5 @@ EditorBuildSettings:
     path: Assets/Scenes/StartMenu.unity
   - enabled: 1
     path: Assets/Scenes/Sandbox.unity
+  - enabled: 1
+    path: Assets/Scenes/EndMenu.unity

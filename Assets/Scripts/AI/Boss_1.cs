@@ -62,10 +62,11 @@ public class Boss_1 : MonoBehaviour
 
 	void Update () 
 	{
+		// WIN
 		if (health <= 0)
 		{
 			gameManager.win = true;
-			Application.LoadLevel("EndMenu");
+			Application.LoadLevel(2);
 		}
 
 		if (phased)

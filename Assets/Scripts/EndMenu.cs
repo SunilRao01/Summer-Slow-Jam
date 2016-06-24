@@ -11,6 +11,8 @@ public class EndMenu : MonoBehaviour
 	{
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		gameStatusText = GameObject.Find("GameStatusText").GetComponent<Text>();
+
+		updateLabels();
 	}
 
 	void updateLabels()
@@ -27,7 +29,7 @@ public class EndMenu : MonoBehaviour
 
 	public void onPlayAgain()
 	{
-		Application.LoadLevel("Sandbox");
+		Application.LoadLevel(1);
 	}
 
 	public void onQuit()

@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 	// Note: Down, Up, Left, Right
 	private SpriteRenderer o_spriteRenderer;
 	public List<Sprite> facingDirectionSprites; 
+	private GameManager gameManager;
 
 	// Movement
 	public float playerMovementSpeed;
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour
 		// Initialize local variables
 		o_spriteRenderer = GetComponent<SpriteRenderer>();
 		o_rigidbody = GetComponent<Rigidbody2D>();
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 		// Default direction currently facing up
 		o_spriteRenderer.sprite = facingDirectionSprites[0];
@@ -358,10 +360,7 @@ public class Player : MonoBehaviour
 				other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 			}
 		}
-	}
 
-	void OnCollisionEnter2D(Collision2D other)
-	{
 
 	}
 
@@ -393,12 +392,17 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	/*
-	void OnTriggerEnter2D(Collision2D coll)
-	{
-		takeDamage (1.00f);
-	}
 
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		// LOSE
+		if (other.gameObject.CompareTag("Minion") || other.gameObject.CompareTag("EnemyProjectile"))
+		{
+			gameManager.win = false;
+			Application.LoadLevel(2);
+		}
+	}
+	/*
 	void takeDamage (float amount)
 	{
 
