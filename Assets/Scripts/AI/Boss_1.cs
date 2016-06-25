@@ -9,10 +9,13 @@ public class Boss_1 : MonoBehaviour
 	private int maxHealth;
 	public int health = 1000;
 	public Text healthLabel;
+	public AudioClip soundShoot, soundThink;
 
 	// Phasing
 	private bool phasing;
 	public int currentPhase;
+	private const int maxPhases = 4;
+	private int phaseDamage;
 	private bool phased;
 
 	// Prefabs
@@ -24,6 +27,8 @@ public class Boss_1 : MonoBehaviour
 	private GameObject player1;
 	private GameObject player2;
 	private Rigidbody2D o_rigidbody;
+	private GenericSprite o_genericSprite;
+	private AudioSource o_audioSource;
 
 	// Phase 0
 	private GameObject tempBox = null;
@@ -52,10 +57,12 @@ public class Boss_1 : MonoBehaviour
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		player1 = GameObject.Find("Player_1").gameObject;
 		player2 = GameObject.Find("Player_2").gameObject;
+		o_genericSprite = GetComponent<GenericSprite> ();
+		o_audioSource = GetComponent<AudioSource> ();
 
 		// Initialize local variables
 		o_rigidbody = GetComponent<Rigidbody2D>();
-
+		
 		maxHealth = health;
 		healthLabel.text = health.ToString();
 	}
@@ -69,22 +76,17 @@ public class Boss_1 : MonoBehaviour
 			Application.LoadLevel(2);
 		}
 
-		if (phased)
-		{
-			if ((health == ((maxHealth/3) * 2) || health == (maxHealth/3)))
-			{
+		// Have we taken enough damage to start the next phase?
+		if (currentPhase < maxPhases) {
+			while (phaseDamage >= (maxHealth / 3)) {
 				phased = false;
 				phasing = false;
-				StopAllCoroutines();
-
+				StopAllCoroutines ();
 				currentPhase++;
+				phaseDamage -= (maxHealth / 3);
+				thinkSound ();
 			}
 		}
-		else if (health != ((maxHealth/3) * 2) && health != (maxHealth/3))
-		{
-			phased = true;
-		}
-
 		movement();
 	}
 
@@ -137,11 +139,18 @@ public class Boss_1 : MonoBehaviour
 		}
 	}
 
+	void thinkSound ()
+	{
+		if (soundThink)
+			o_audioSource.PlayOneShot (soundThink);
+	}
+
 	IEnumerator initialPause()
 	{
 		yield return new WaitForSeconds(3.0f);
 		phased = false;
 		currentPhase++;
+		thinkSound ();
 	}
 
 	void phase1()
@@ -214,6 +223,9 @@ public class Boss_1 : MonoBehaviour
 			yield return new WaitForSeconds(0.5f);
 
 			GameObject tempProjectile = (GameObject) Instantiate(phase1ProjectilePrefab, transform.position, Quaternion.identity);
+			if (soundShoot)
+				o_audioSource.PlayOneShot (soundShoot);
+			o_genericSprite.AddGlow (new Vector4 (0.50f, 0.00f, 0.00f, 0.00f));
 
 			Vector2 shootDirection = currentTarget.position - transform.position;
 			shootDirection.Normalize();
@@ -249,10 +261,15 @@ public class Boss_1 : MonoBehaviour
 
 				GameObject[] minions = GameObject.FindGameObjectsWithTag ("Minion");
 				if (minions.Length < 15) {
-					GameObject tempMinion = (GameObject) Instantiate(minionPrefab, transform.position, Quaternion.identity);
+					float angle = Random.Range (0.00f, Mathf.PI * 2.00f);
+					Vector3 direction = new Vector3 (
+						Mathf.Cos (angle), Mathf.Sin (angle), 0.00f);
+					GameObject tempMinion = (GameObject) Instantiate(minionPrefab, transform.position + direction * 0.75f, Quaternion.identity);
+					tempMinion.GetComponent<Rigidbody2D>().velocity = direction * 4.00f;
 					tempMinion.GetComponent<Minion>().targetPosition = currentTarget;
 					tempMinion.GetComponent<Minion>().startMinion();
 					tempMinion.tag = "Minion";
+					o_genericSprite.AddGlow (new Vector4 (-0.50f, 0.50f, -0.50f, 0.00f));
 				}
 			}
 		}
@@ -267,6 +284,8 @@ public class Boss_1 : MonoBehaviour
 			yield return new WaitForSeconds(0.1f);
 
 			GameObject tempProjectile = (GameObject) Instantiate(phase1ProjectilePrefab, transform.position, Quaternion.identity);
+			if (soundShoot)
+				o_audioSource.PlayOneShot (soundShoot);
 			
 			Vector2 shootDirection = currentTarget.position - transform.position;
 			shootDirection.Normalize();
@@ -341,6 +360,7 @@ public class Boss_1 : MonoBehaviour
 
 	private void damage()
 	{
+		phaseDamage++;
 		health--;
 		healthLabel.text = health.ToString();
 		GetComponent<GenericSprite>().damage ();

@@ -10,27 +10,19 @@ public class Player : MonoBehaviour
 	enum Direction {none, left, up, right, down};
 
 	public bool godMode;
-	public float health;
-	private float maxHealth;
 
-	// Audio clips
-	public AudioClip soundShoot, soundCombinedShoot;
-	public AudioClip soundStep, soundCombinedStep;
-	public AudioClip soundRegen;
-	public AudioClip soundCombine, soundSeparate;
+	public float health, maxHealth;
 
 	// TEMP No Animation
 	// Note: Down, Up, Left, Right
 	private SpriteRenderer o_spriteRenderer;
 	public List<Sprite> facingDirectionSprites; 
-	private GameManager o_gameManager;
+	private GameManager gameManager;
 
 	// Movement
 	public float playerMovementSpeed;
 	public float playerMaxMovementSpeed;
 	private Rigidbody2D o_rigidbody;
-	private float horizontalMovement;
-	private float verticalMovement;
 
 	// Shooting
 	// Individual Quad Directional
@@ -42,10 +34,6 @@ public class Player : MonoBehaviour
 	private bool isQuadShootRunning = false;
 	private Direction quadShootDirection;
 
-	// Health Regeneration
-	public float regenInterval, regenWait;
-	private float regenIntervalTimer, regenWaitTimer;
-
 	// Combined Full Rotational Shooting
 	public bool combined;
 	public GameObject playerCombinedProjectilePrefab;
@@ -54,44 +42,39 @@ public class Player : MonoBehaviour
 	private bool isShooting = false;
 	private Vector2 rotationalShootDirection;
 	public List<Sprite> combinedFacingDirectionSprites;
-	private float horizontalShooting;
-	private float verticalShooting;
 	
-	// Animations and effects
-	private float flashTime;
 	private List<Sprite> currentDirectionalSprites;
 
-	// References to object components
+	// Animations and effects
+	private float flashTime;
+
 	private GameObject o_otherPlayerObject;
 	private Player o_otherPlayer;
-	private AudioSource o_audioSource;
-	private GenericSprite o_genericSprite;
-	private BoxCollider2D o_collider;
+	private float horizontalMovement;
+	private float verticalMovement;
+	private float horizontalShooting;
+	private float verticalShooting;
 
 	void Awake()
 	{
 		// Initialize local variables
-		o_spriteRenderer = GetComponent<SpriteRenderer> ();
-		o_rigidbody      = GetComponent<Rigidbody2D> ();
-		o_audioSource    = GetComponent<AudioSource> ();
-		o_genericSprite  = GetComponent<GenericSprite> ();
-		o_collider		 = GetComponent<BoxCollider2D> ();
-		o_gameManager    = GameObject.Find("GameManager").GetComponent<GameManager>();
+		o_spriteRenderer = GetComponent<SpriteRenderer>();
+		o_rigidbody = GetComponent<Rigidbody2D>();
 		maxHealth = health;
 
-		// Maintain a reference to our other player.
 		if (gameObject.name == "Player_1")
 			o_otherPlayerObject = GameObject.Find("Player_2");
 		else
 			o_otherPlayerObject = GameObject.Find("Player_1");
 		o_otherPlayer = o_otherPlayerObject.GetComponent<Player> ();
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 		// Default direction currently facing up
 		o_spriteRenderer.sprite = facingDirectionSprites[0];
 		currentDirectionalSprites = facingDirectionSprites;
 
-		Physics2D.IgnoreCollision (o_collider,
-			o_otherPlayerObject.GetComponent<Collider2D>());
+		Physics2D.IgnoreCollision (GetComponent<Collider2D>(),
+		       o_otherPlayerObject.GetComponent<Collider2D>());
 	}
 
 	void Start () 
@@ -130,34 +113,12 @@ public class Player : MonoBehaviour
 		}
 
 		// Regenerate Health
-		regenerateHealth (Time.deltaTime);
-	}
-
-	void regenerateHealth (float t)
-	{
-		// Don't start regenerating health until a certain time after damage has passed.
-		if (regenWaitTimer > 0.00f) {
-			regenWaitTimer -= t;
-			if (regenWaitTimer <= 0.00f) {
-				regenWaitTimer = 0.00f;
-				regenIntervalTimer = 0.00f;
-			}
-    		else
-				return;
-		}
-		regenIntervalTimer -= Time.deltaTime;
-		while (regenIntervalTimer <= 0.00f) {
-			regenIntervalTimer += regenInterval;
-			if (health < maxHealth) {
-				health = Mathf.Min (health + 1.00f, maxHealth);
-				if (soundRegen)
-					o_audioSource.PlayOneShot (soundRegen);
+		if (health < maxHealth) {
+			float newHealth = health + Time.deltaTime * 0.50f;
+			if (Mathf.Floor (newHealth * 10.00f) != Mathf.Floor (health * 10.00f))
 				updateColor ();
-				o_genericSprite.AddGlow (new Vector4 (-0.50f, 1.00f, -0.50f));
-			}
+			health = newHealth;
 		}
-		if (health >= maxHealth)
-			return;
 	}
 	
 	void FixedUpdate () 
@@ -210,10 +171,6 @@ public class Player : MonoBehaviour
 			toggleCombinedModeReal ();
 			o_otherPlayer.toggleCombinedModeReal ();
 		}
-		if (combined && soundCombine)
-			o_audioSource.PlayOneShot (soundCombine);
-		if (!combined && soundSeparate)
-			o_audioSource.PlayOneShot (soundSeparate);
 	}
 	
 	public void toggleCombinedModeReal ()
@@ -240,7 +197,6 @@ public class Player : MonoBehaviour
 			}
 			else {
 				playerMovementSpeed = 150;
-				transform.localScale /= 1.33f;
 			}
 		}
 		else
@@ -254,8 +210,7 @@ public class Player : MonoBehaviour
 			}
 			else if (gameObject.name == "Player_1")
 			{
-				playerMovementSpeed = 35;
-				transform.localScale *= 1.33f;
+				playerMovementSpeed = 50;
 			}
 		}
 
@@ -426,8 +381,8 @@ public class Player : MonoBehaviour
 		while (isShootingHorizontal || isShootingVertical)
 		{
 			GameObject tempProjectile = (GameObject) Instantiate(playerProjectilePrefab, transform.position, Quaternion.identity);
-			if (soundShoot)
-				o_audioSource.PlayOneShot (soundShoot);
+
+			// TODO: rotate projectile sprite relative to shoot direction
 
 			Vector2 projectileDirection = Vector2.zero;
 			switch (quadShootDirection)
@@ -469,7 +424,14 @@ public class Player : MonoBehaviour
 		//Debug.Log("Axis: " + horizontalShooting + ", " + verticalShooting);
 		if (horizontalShooting != 0 || verticalShooting != 0)
 		{
-			rotationalShootDirection = new Vector2 (horizontalShooting, verticalShooting).normalized * 4.00f;
+			Vector2 lookPosition = transform.position;
+			lookPosition.x += (horizontalShooting * 5);
+			lookPosition.y += (verticalShooting * 5);
+			
+			rotationalShootDirection = (lookPosition - (Vector2)transform.position);
+			rotationalShootDirection.Normalize();
+			rotationalShootDirection *= 4.00f;
+
 			if (!isShooting)
 			{
 				isShooting = true;
@@ -491,9 +453,7 @@ public class Player : MonoBehaviour
 			yield return new WaitForSeconds(playerCombinedShootRate);
 
 			GameObject tempProjectile = (GameObject) Instantiate(playerCombinedProjectilePrefab, transform.position, Quaternion.identity);
-			if (soundCombinedShoot)
-				o_audioSource.PlayOneShot (soundCombinedShoot);			
-
+			
 			Vector2 projectileDirection = rotationalShootDirection;
 			projectileDirection *= combinedBulletSpeed;
 			
@@ -509,6 +469,7 @@ public class Player : MonoBehaviour
 		// LOSE
 		if (!godMode)
 		{
+<<<<<<< HEAD
 			bool destroy = false, hurt = false;
 			if (other.gameObject.CompareTag("Minion")) {
 			    hurt = true;
@@ -516,14 +477,27 @@ public class Player : MonoBehaviour
 			else if (other.gameObject.CompareTag("EnemyProjectile")) {
 				destroy = true;
 				hurt = true;
+=======
+			if (other.gameObject.CompareTag("Minion") 
+			    || other.gameObject.CompareTag("EnemyProjectile"))
+			{
+				health--;
+
+				if (health <= 0 && !godMode)
+				{
+					gameManager.win = false;
+					Application.LoadLevel(2);
+				}
+
+>>>>>>> c6ee431e5a0c333e32ff53233f7e01d84b31fc38
 			}
 			if (destroy) {
 				Destroy (other.gameObject);
 			}
 			if (hurt) {
-				// Hurt ourselves.  If we didn't end the game (and we're combined), hurt the other player as well.
-				if (!damage () && combined)
-					o_otherPlayer.damage ();
+				if (!damage ())
+					if (combined)
+						o_otherPlayer.damage ();
 			}
 		}
 	}
@@ -531,9 +505,8 @@ public class Player : MonoBehaviour
 	bool damage()
 	{
 		health -= 1.00f;
-		regenWaitTimer = regenWait;
 		if (health <= 0.00f) {
-			o_gameManager.win = false;
+			gameManager.win = false;
 			Application.LoadLevel (2);
 			return true;
 		}
@@ -547,11 +520,7 @@ public class Player : MonoBehaviour
 	void updateColor ()
 	{
 		float percent = health / maxHealth;
-		Vector4 newColor = new Vector4 (
-			1.00f + percent / 2.00f,
-			percent * 1.50f - 0.50f,
-			percent * 1.50f - 0.50f,
-			1.00f);
+		Vector4 newColor = new Vector4 (1.00f + percent / 2.00f, percent, percent, 1.00f);
 		GetComponent<Renderer>().material.SetVector ("_Color", newColor);
 	}
 }

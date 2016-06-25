@@ -6,17 +6,25 @@ public class Minion : MonoBehaviour
 {
 	private int health = 3;
 	public Transform targetPosition;
-	private Rigidbody2D o_rigidbody;
 	public GameObject myShadow;
 	public float maxVelocity;
-
 	public List<Sprite> positionalSprites;
+
+    // Audio clips
+	public AudioClip soundSpawn, soundDie;
+
+	// References to components
+	private Rigidbody2D    o_rigidbody;
 	private SpriteRenderer o_renderer;
+	private AudioSource    o_audioSource;
 
 	void Awake()
 	{
-		o_rigidbody = GetComponent<Rigidbody2D>();
-		o_renderer = GetComponent<SpriteRenderer> ();
+		o_rigidbody   = GetComponent<Rigidbody2D>();
+		o_renderer    = GetComponent<SpriteRenderer> ();
+		o_audioSource = GetComponent<AudioSource> ();
+		if (soundSpawn)
+			o_audioSource.PlayOneShot (soundSpawn);
 	}
 
 	void Start ()
@@ -49,6 +57,8 @@ public class Minion : MonoBehaviour
 
 		if (health < 0)
 		{
+			if (soundDie)
+				o_audioSource.PlayOneShot (soundDie);
 			Destroy (gameObject);
 		}
 		GetComponent<GenericSprite>().damage ();

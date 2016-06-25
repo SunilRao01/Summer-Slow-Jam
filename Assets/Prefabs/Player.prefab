@@ -12,6 +12,8 @@ GameObject:
   - 114: {fileID: 11448956}
   - 50: {fileID: 5057196}
   - 61: {fileID: 6148940}
+  - 82: {fileID: 8243624}
+  - 114: {fileID: 11482988}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -60,6 +62,75 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 3.18000007, y: 2.57999992}
+--- !u!82 &8243624
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121990}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11448956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,17 +142,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4435800a264c18d4594f14a9df901f0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  godMode: 0
   health: 0
+  soundShoot: {fileID: 0}
+  soundCombinedShoot: {fileID: 0}
+  soundStep: {fileID: 0}
+  soundCombinedStep: {fileID: 0}
+  soundRegen: {fileID: 8300000, guid: d34bd61a521334145864ccbae0c29e92, type: 3}
+  soundCombine: {fileID: 8300000, guid: 995cccb8665d5ee48ae639ff50f103eb, type: 3}
+  soundSeparate: {fileID: 8300000, guid: 2e41f53614a36e04c96ace18c8b0838e, type: 3}
   facingDirectionSprites: []
   playerMovementSpeed: 150
   playerMaxMovementSpeed: 5
   playerProjectilePrefab: {fileID: 0}
   playerShootRate: .5
   bulletSpeed: 10
+  regenInterval: .5
+  regenWait: 2
+  combined: 0
   playerCombinedProjectilePrefab: {fileID: 0}
   playerCombinedShootRate: 0
   combinedBulletSpeed: 0
   combinedFacingDirectionSprites: []
+--- !u!114 &11482988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270b0cdb1dbcb104b97a12aecd649478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortOffset: 0
+  audioDamage: {fileID: 8300000, guid: db4006249226c374a84deac27ce7f15d, type: 3}
 --- !u!212 &21223934
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -114,7 +209,39 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: soundShoot
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: audioDamage
+      value: 
+      objectReference: {fileID: 8300000, guid: db4006249226c374a84deac27ce7f15d, type: 3}
+    - target: {fileID: 0}
+      propertyPath: regenInterval
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: regenWait
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: soundRegen
+      value: 
+      objectReference: {fileID: 8300000, guid: d34bd61a521334145864ccbae0c29e92, type: 3}
+    - target: {fileID: 0}
+      propertyPath: soundCombine
+      value: 
+      objectReference: {fileID: 8300000, guid: 995cccb8665d5ee48ae639ff50f103eb, type: 3}
+    - target: {fileID: 0}
+      propertyPath: soundSeparate
+      value: 
+      objectReference: {fileID: 8300000, guid: 2e41f53614a36e04c96ace18c8b0838e, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 121990}

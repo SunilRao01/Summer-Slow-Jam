@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &226581061
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &517493362
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &618240017
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,7 +424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1001 &638795577
 Prefab:
   m_ObjectHideFlags: 0
@@ -531,7 +531,7 @@ Prefab:
       objectReference: {fileID: 188590, guid: aac561a17c7533e4eb5d130b121c7e66, type: 2}
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: playerCombinedShootRate
-      value: .150000006
+      value: .100000001
       objectReference: {fileID: 0}
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: combinedBulletSpeed
@@ -579,16 +579,19 @@ Prefab:
       objectReference: {fileID: 2100000, guid: a16acc0ff47cfa14b94faefba9234d7b, type: 2}
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: godMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
+    - target: {fileID: 5057196, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+=======
+>>>>>>> c6ee431e5a0c333e32ff53233f7e01d84b31fc38
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: health
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
-      propertyPath: soundShoot
-      value: 
-      objectReference: {fileID: 8300000, guid: 3e159b752b33376459a9d9dd67805e6d, type: 3}
     m_RemovedComponents:
     - {fileID: 6148940, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
@@ -660,7 +663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &652403957
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,7 +731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &784257614
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,7 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: -3.0999999
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &942404527
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,7 +891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &1088897345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,7 +1044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &1104994348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,7 +1242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &1221837388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,7 +1310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1001 &1531574441
 Prefab:
   m_ObjectHideFlags: 0
@@ -1361,7 +1364,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: playerShootRate
-      value: .150000006
+      value: .200000003
       objectReference: {fileID: 0}
     - target: {fileID: 462764, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: m_LocalScale.x
@@ -1410,7 +1413,7 @@ Prefab:
       objectReference: {fileID: 188590, guid: aac561a17c7533e4eb5d130b121c7e66, type: 2}
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: playerCombinedShootRate
-      value: .200000003
+      value: .100000001
       objectReference: {fileID: 0}
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: combinedBulletSpeed
@@ -1446,20 +1449,19 @@ Prefab:
       objectReference: {fileID: 2100000, guid: a16acc0ff47cfa14b94faefba9234d7b, type: 2}
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: godMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
+    - target: {fileID: 5057196, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+=======
+>>>>>>> c6ee431e5a0c333e32ff53233f7e01d84b31fc38
     - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
       propertyPath: health
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
-      propertyPath: soundShoot
-      value: 
-      objectReference: {fileID: 8300000, guid: 320209de62db6204a842ceb60d90dfdc, type: 3}
-    - target: {fileID: 11448956, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
-      propertyPath: soundCombinedShoot
-      value: 
-      objectReference: {fileID: 8300000, guid: 0951466c1f7c21d43bf12993b4976e75, type: 3}
     m_RemovedComponents:
     - {fileID: 6148940, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
@@ -1481,6 +1483,19 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: .620000005, y: .569999993}
+--- !u!114 &1531574448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1531574442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270b0cdb1dbcb104b97a12aecd649478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &1577240828
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,7 +1563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &1735189707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1616,7 +1631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &1758252036
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,7 +1699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &1819866071 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 121990, guid: 25a8d54478492e54c998c48de092f76f, type: 2}
@@ -1702,6 +1717,19 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: .620000005, y: .569999993}
+--- !u!114 &1819866077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1819866071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270b0cdb1dbcb104b97a12aecd649478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortOffset: 0
+  timeInterval: .100000001
 --- !u!1 &1870014536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1843,7 +1871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: 0
-  audioDamage: {fileID: 0}
+  timeInterval: .100000001
 --- !u!1 &1887547745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1857,7 +1885,6 @@ GameObject:
   - 50: {fileID: 1887547749}
   - 58: {fileID: 1887547748}
   - 114: {fileID: 1887547751}
-  - 82: {fileID: 1887547752}
   m_Layer: 0
   m_Name: Boss_1
   m_TagString: Untagged
@@ -1947,9 +1974,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 500
   healthLabel: {fileID: 517493364}
-  soundShoot: {fileID: 8300000, guid: c8524fc6caa0b6c4c922712c9f2f0ee8, type: 3}
-  soundThink: {fileID: 8300000, guid: dca35e22915ac6349a6be08b117dc4e4, type: 3}
-  currentPhase: 2
+  currentPhase: 1
   boxPrefab: {fileID: 0}
   phase1MovementSpeed: 1
   phase1ShootSpeed: 200
@@ -1971,76 +1996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SortOffset: -3
-  audioDamage: {fileID: 8300000, guid: 9fbe872cf97fccd4191fbb309b5c7429, type: 3}
---- !u!82 &1887547752
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1887547745}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
+  timeInterval: .100000001
 --- !u!1 &1897207244
 GameObject:
   m_ObjectHideFlags: 0

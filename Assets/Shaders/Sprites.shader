@@ -7,7 +7,7 @@ Shader "Custom/Sprites"
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0.00
 		_Hover ("Hover", Float) = 0.00
 		_HoverSpeed ("Hover Speed", Float) = 1.00
-		_Glow ("Glow", Float) = 0.00
+		_Glow ("Glow", Color) = (0,0,0,0)
 	}
 
 	SubShader
@@ -48,8 +48,8 @@ Shader "Custom/Sprites"
 				half2 texcoord  : TEXCOORD0;
 			};
 			
-			fixed4 _Color;
-			float _Hover, _HoverSpeed, _Glow;
+			fixed4 _Color, _Glow;
+			float _Hover, _HoverSpeed;
 			static const float PI = 3.14159265f;
 
 			v2f vert(appdata_t IN)
